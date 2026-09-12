@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://weizhichao1027-collab.github.io/vitagauge-privacy/sitemap.xml

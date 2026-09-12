@@ -1,12 +1,17 @@
-# VitaGauge Privacy / 元气指数隐私政策
+# VitaGauge / 元气指数官方网站
 
-Public privacy pages for VitaGauge (元气指数). Only static public policy content belongs in this repository.
+Public static official, marketing, support and policy pages for VitaGauge. Only public app information and synthetic example screenshots belong here.
 
-- Chinese policy: https://weizhichao1027-collab.github.io/vitagauge-privacy/
-- English policy: https://weizhichao1027-collab.github.io/vitagauge-privacy/en/
-- Contact: 281916057@qq.com
-- Last updated: 2026-09-12
+- Official: https://weizhichao1027-collab.github.io/vitagauge-privacy/app/
+- Features and pricing: https://weizhichao1027-collab.github.io/vitagauge-privacy/features/
+- Support: https://weizhichao1027-collab.github.io/vitagauge-privacy/support/
+- Privacy (existing URL preserved): https://weizhichao1027-collab.github.io/vitagauge-privacy/
+- Use and purchases: https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/
+- Sources: https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/
+- English: add `/en/` before each route.
+- Contact: weizhichao1027@gmail.com
+- Updated: 2026-09-12
 
-Published through GitHub Pages from `main`, repository root. No build dependencies, scripts, cookies, analytics or external assets are added by this site. GitHub processes hosting requests under its own privacy statement.
+GitHub Pages publishes `main` at the repository root. No build dependencies, scripts, forms, cookies, analytics or external fonts. GitHub processes hosting requests under its own privacy statement.
 
-Update both language pages together whenever app data practices change. Keep the policy date and bundled app privacy copy synchronized.
+Version 1.1 pages are explicitly marked as previews until App Store release. Prices always defer to Apple's purchase sheet. Screenshots show synthetic demonstration data rendered by the real UIKit app; they do not contain personal health records. Update both languages and the bundled app privacy text whenever data practices change.
