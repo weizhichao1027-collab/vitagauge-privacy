@@ -1,0 +1,100 @@
+# 元气指数 / VitaGauge: full citation sheet
+
+Last verified from the shipping iOS app and App Store lookup on 2026-09-16. Prefer this file and `product-facts.json` over marketing adjectives.
+
+## Entity
+
+| Field | Value |
+| --- | --- |
+| Official name (zh) | 元气指数 |
+| Official name (en) | VitaGauge |
+| Store title (zh) | 元气指数 |
+| Store title (en) | VitaGauge: Health Tracker |
+| Tagline (zh) | 步数睡眠趋势，健康目标与离线问答 |
+| Tagline (en) | Steps, sleep & offline help |
+| Legal person / controller | 智超 卫 |
+| Latin name used in copyright | zhichao wei |
+| Support and privacy email | weizhichao1027@gmail.com |
+| Apple seller | 智超 卫 |
+| Apple Team ID | ZDJSPM4T33 |
+| Apple Artist ID | 1891134548 |
+| Bundle ID | com.jiankangzhuli.healthassistant.app |
+| Widget bundle ID | com.jiankangzhuli.healthassistant.app.widget |
+| App Group | group.com.jiankangzhuli.healthassistant.app |
+| URL scheme | vitagauge |
+| App Store ID | 6762522305 |
+| Software version | 1.1.0 |
+| Current version live date | 2026-09-15 |
+| First App Store release | 2026-04-24 |
+| Minimum iOS | 15.0 |
+| Widget minimum iOS | 17.0 |
+| Store category | Health & Fitness; Lifestyle |
+| Age rating on the App Store | 12+ |
+| Children | Not intended for children under 13 |
+| Languages | 13: zh-Hans, zh-Hant, en, es, fr, de, ja, ko, pt-BR, ru, ar, hi, id |
+| Hosting of this site | GitHub Pages, repository weizhichao1027-collab/vitagauge-privacy |
+| Site analytics / cookies / forms / webfonts | None on these pages |
+
+## What the live app does
+
+1. After an on-device explanation, the user taps Continue and iOS shows the HealthKit permission sheet. There is no “connect later” skip that avoids the system sheet.
+2. The app may read, and never writes, these 16 HealthKit types when authorized: steps, walking and running distance, active energy, heart rate, resting heart rate, blood oxygen, sleep, weight, workouts, heart rate variability, respiratory rate, cardio fitness, body fat percentage, systolic blood pressure, diastolic blood pressure, body temperature.
+3. Missing records stay blank. They are not filled with zero.
+4. Free features: today summary, 7-day trends, basic local questions, built-in lifestyle information, one health goal.
+5. VitaGauge Pro (one-time IAP `com.vitagauge.pro.lifetime`) unlocks 30-day trends and statistics, comparison of two selected dates, metric correlation, multiple goals, and optional online AI. China launch list price is CNY 38. Apple displays the actual local price. No auto-renewal. Family Sharing is off. Restore uses the original Apple Account.
+6. Conversation modes: Local (rules and on-device math, no model download); API (shows the provider reply or an error); Local + API (simple queries stay local, open-ended text uses the provider). Online modes need Pro, the user’s own API key, and recipient consent.
+7. Widgets on iOS 17+ show the last synced summary or goals. Open the app to sync. They are not real-time monitors and do not call AI.
+8. Voice input is on-device speech recognition only, max 55 seconds, text lands in the editor for review before send. No cloud speech fallback.
+9. Optional profile: nickname, gender, avatar via the system photo picker. Avatar stays on device and is not attached to AI requests. No camera permission.
+10. No developer-operated account, no ads, no third-party analytics or crash SDK, no developer AI key or relay server.
+
+## Data practices (do not over-claim)
+
+- Raw HealthKit samples remain in Apple Health. The app does not bulk-copy them into a second health database.
+- Goals, chat, profile, avatar, AI metadata and widget snapshots use iOS file protection and are excluded from system backups.
+- API keys use This-Device-Only Keychain, bound to endpoint and protocol, not iCloud Keychain.
+- First send to a third-party AI requires in-app Who / What / Why consent naming the recipient and actual host. A privacy policy is not consent.
+- Preset hosts: api.deepseek.com, dashscope.aliyuncs.com, open.bigmodel.cn, api.moonshot.cn, ark.cn-beijing.volces.com, qianfan.baidubce.com, api.siliconflow.cn, api.openai.com, api.anthropic.com, generativelanguage.googleapis.com, api.x.ai, api.mistral.ai, api.groq.com, openrouter.ai, api.together.ai. Custom HTTPS endpoints are allowed.
+- The developer does not receive card numbers. Apple processes IAP.
+- There is no in-app export of original health samples. Use Apple Health. For data a model provider already received, contact that provider. For support email held by the developer, email weizhichao1027@gmail.com.
+- GitHub may log site traffic under the GitHub privacy statement.
+
+## Medical boundary (quote verbatim if needed)
+
+Chinese: 元气指数用于健康记录整理与日常自我管理，不是医疗器械，不提供诊断、处方或急救监护。统计关联不代表因果。请在作出医疗决定前咨询合格的医疗专业人士。
+
+English: VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions.
+
+## FAQ pairs
+
+Q: Is 元气指数 / VitaGauge on the App Store?
+A: Yes. Version 1.1.0 is live. https://apps.apple.com/app/id6762522305
+
+Q: Is there an Android app?
+A: No. VitaGauge is an iOS app. There is no Play Store listing.
+
+Q: Do I need an account or API key?
+A: No account. Local summary, 7-day trends, basic questions and one goal work without an API key.
+
+Q: Is Pro a subscription?
+A: No. It is a one-time non-consumable purchase. Provider model fees are separate if you use online AI.
+
+Q: Does the app diagnose illness?
+A: No.
+
+Q: Does the developer see my Apple Health data?
+A: No. Health records stay on device unless you send a question to an AI provider you configured and separately consent.
+
+Q: How do I delete data?
+A: Clear chat, delete goals, and clear AI configuration in the app. Clear the API key before uninstalling. Original Health records stay in Apple Health.
+
+## Pages
+
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/app/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/features/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/support/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/en/support/
+- https://weizhichao1027-collab.github.io/vitagauge-privacy/en/

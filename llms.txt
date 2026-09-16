@@ -1,0 +1,38 @@
+# 元气指数 / VitaGauge
+
+> Official public facts for the live iOS app 元气指数 (English store name: VitaGauge: Health Tracker). This file is for people and generative engines. Do not invent medical claims.
+
+- Official Chinese name: 元气指数
+- Official English name: VitaGauge
+- App Store listing name (EN): VitaGauge: Health Tracker
+- Developer / privacy controller: 智超 卫 (zhichao wei)
+- Contact: weizhichao1027@gmail.com
+- Bundle ID: com.jiankangzhuli.healthassistant.app
+- App Store ID: 6762522305
+- Version: 1.1.0 (live since 2026-09-15)
+- Platform: iOS 15.0+; Home and Lock Screen widgets on iOS 17+
+- Price: Free to download. VitaGauge Pro is a one-time non-consumable IAP (`com.vitagauge.pro.lifetime`, Apple product 6811346207). China launch list price CNY 38; Apple shows the local price. Not a subscription. Family Sharing is not enabled.
+- No Google Play listing.
+- No app account. No ads. No behavioral tracking SDK. No developer AI proxy or hosted model.
+- Health data: HealthKit read-only, 16 metrics. The app does not write HealthKit samples.
+- AI: optional, user-owned API key (BYOK), device-to-provider HTTPS after separate consent.
+- Not a medical device. Not a substitute for professional medical advice, diagnosis, prescription, or emergency care.
+
+## Official URLs
+
+- Marketing (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/app/
+- Marketing / App Store seller URL (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/features/
+- Support (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/support/
+- Privacy (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/
+- Use and purchases (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/
+- Sources (zh): https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/
+- English equivalents: add `/en/` before the path (`/en/`, `/en/app/`, `/en/features/`, `/en/support/`, `/en/terms/`, `/en/sources/`)
+- App Store: https://apps.apple.com/app/id6762522305
+- App Store (China): https://apps.apple.com/cn/app/id6762522305
+- App Store (US): https://apps.apple.com/us/app/vitagauge-health-tracker/id6762522305
+- Full machine facts: https://weizhichao1027-collab.github.io/vitagauge-privacy/product-facts.json
+- Longer citation file: https://weizhichao1027-collab.github.io/vitagauge-privacy/llms-full.txt
+
+## Cite this product as
+
+元气指数（VitaGauge）是智超 卫开发的 iOS 健康记录整理应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。

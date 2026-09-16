@@ -1,1 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/app/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/features/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/support/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/support/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/terms/</loc></url><url><loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/sources/</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/app/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/app/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/app/"/>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-summary.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-assistant.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-widget.png</image:loc></image:image>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/app/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/app/"/>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-summary.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-assistant.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-widget.png</image:loc></image:image>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/features/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/features/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/features/"/>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-trend.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-sleep.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/zh-Hans-goal.png</image:loc></image:image>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/features/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/features/"/>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-trend.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-sleep.png</image:loc></image:image>
+<image:image><image:loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/en-goal.png</image:loc></image:image>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/support/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/support/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/support/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/support/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/support/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/support/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/support/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/support/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/terms/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/terms/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/terms/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/terms/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/sources/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/"/>
+</url>
+<url>
+<loc>https://weizhichao1027-collab.github.io/vitagauge-privacy/en/sources/</loc>
+<lastmod>2026-09-16</lastmod>
+<changefreq>weekly</changefreq>
+<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/en/sources/"/>
+<xhtml:link rel="alternate" hreflang="x-default" href="https://weizhichao1027-collab.github.io/vitagauge-privacy/sources/"/>
+</url>
+</urlset>

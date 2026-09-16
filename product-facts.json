@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "comment": "Single source of truth for VitaGauge / 元气指数 public sites. Do not invent medical claims. Update HTML, llms.txt and sitemap from this file.",
+  "updated": "2026-09-16",
+  "status": "live",
+  "product": {
+    "officialNameZh": "元气指数",
+    "officialNameEn": "VitaGauge",
+    "storeNameZh": "元气指数",
+    "storeNameEn": "VitaGauge: Health Tracker",
+    "taglineZh": "步数睡眠趋势，健康目标与离线问答",
+    "taglineEn": "Steps, sleep & offline help",
+    "shortPitchZh": "把 Apple 健康中的日常记录，变成更容易理解的摘要和趋势。无需注册账户，也无需配置 API，就能开始使用本地功能。",
+    "shortPitchEn": "Make your everyday Apple Health records easier to understand. Get started without an app account or API configuration.",
+    "bundleId": "com.jiankangzhuli.healthassistant.app",
+    "widgetBundleId": "com.jiankangzhuli.healthassistant.app.widget",
+    "appGroup": "group.com.jiankangzhuli.healthassistant.app",
+    "urlScheme": "vitagauge",
+    "version": "1.1.0",
+    "build": "3",
+    "released": "2026-09-15",
+    "firstReleased": "2026-04-24",
+    "minimumOs": "15.0",
+    "widgetMinimumOs": "17.0",
+    "platform": "iOS",
+    "deviceFocus": "iPhone",
+    "fileSizeBytes": 7877632,
+    "category": {
+      "primary": "Health & Fitness",
+      "secondary": "Lifestyle",
+      "primaryId": 6013,
+      "genreIds": ["6013", "6012"]
+    },
+    "contentRating": "12+",
+    "ageNotIntendedUnder": 13,
+    "languages": [
+      "zh-Hans", "zh-Hant", "en", "es", "fr", "de", "ja", "ko", "pt-BR", "ru", "ar", "hi", "id"
+    ],
+    "languageCount": 13,
+    "iconName": "向阳"
+  },
+  "legal": {
+    "controllerZh": "智超 卫",
+    "controllerEn": "zhichao wei",
+    "controllerLatin": "zhichao wei",
+    "appleSellerName": "智超 卫",
+    "appleTeamId": "ZDJSPM4T33",
+    "appleArtistId": 1891134548,
+    "email": "weizhichao1027@gmail.com",
+    "privacyEffectiveDate": "2026-09-16",
+    "privacyPreviousDate": "2026-09-14",
+    "childrenAge": 13,
+    "notMedicalDevice": true,
+    "standardEula": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+  },
+  "stores": {
+    "appleId": "6762522305",
+    "trackViewUrl": "https://apps.apple.com/app/id6762522305",
+    "trackViewUrlZh": "https://apps.apple.com/cn/app/id6762522305",
+    "trackViewUrlEn": "https://apps.apple.com/us/app/vitagauge-health-tracker/id6762522305",
+    "reviewUrl": "https://apps.apple.com/app/id6762522305?action=write-review",
+    "developerUrlZh": "https://apps.apple.com/cn/developer/id1891134548",
+    "developerUrlEn": "https://apps.apple.com/us/developer/id1891134548",
+    "playStore": null,
+    "price": "Free"
+  },
+  "iap": {
+    "name": "VitaGauge Pro",
+    "productId": "com.vitagauge.pro.lifetime",
+    "appleProductId": "6811346207",
+    "type": "non-consumable",
+    "subscription": false,
+    "familySharing": false,
+    "chinaLaunchPriceCNY": 38,
+    "priceNoteZh": "实际金额与币种以 App 内 Apple 购买页为准。",
+    "priceNoteEn": "Apple shows the local price on the purchase sheet.",
+    "refunds": "https://reportaproblem.apple.com/"
+  },
+  "sites": {
+    "origin": "https://weizhichao1027-collab.github.io",
+    "base": "https://weizhichao1027-collab.github.io/vitagauge-privacy",
+    "hosting": "GitHub Pages",
+    "publishRepo": "https://github.com/weizhichao1027-collab/vitagauge-privacy",
+    "defaultLocale": "zh-Hans",
+    "locales": ["zh-Hans", "en"],
+    "paths": {
+      "privacy": "/",
+      "privacyEn": "/en/",
+      "marketing": "/app/",
+      "marketingEn": "/en/app/",
+      "features": "/features/",
+      "featuresEn": "/en/features/",
+      "support": "/support/",
+      "supportEn": "/en/support/",
+      "terms": "/terms/",
+      "termsEn": "/en/terms/",
+      "sources": "/sources/",
+      "sourcesEn": "/en/sources/"
+    },
+    "storeMarketingUrlZh": "https://weizhichao1027-collab.github.io/vitagauge-privacy/features/",
+    "storeMarketingUrlEn": "https://weizhichao1027-collab.github.io/vitagauge-privacy/en/features/",
+    "noCookies": true,
+    "noAnalytics": true,
+    "noExternalFonts": true,
+    "noForms": true
+  },
+  "featuresShipped": {
+    "healthMetrics": 16,
+    "metrics": [
+      "steps",
+      "walkingRunningDistance",
+      "activeEnergy",
+      "heartRate",
+      "restingHeartRate",
+      "bloodOxygen",
+      "sleep",
+      "weight",
+      "workouts",
+      "heartRateVariability",
+      "respiratoryRate",
+      "cardioFitness",
+      "bodyFatPercentage",
+      "systolicBloodPressure",
+      "diastolicBloodPressure",
+      "bodyTemperature"
+    ],
+    "healthKitReadOnly": true,
+    "healthKitWrite": false,
+    "free": [
+      "dailySummary",
+      "7dayTrends",
+      "basicLocalQueries",
+      "builtInLifestyleInfo",
+      "oneGoal"
+    ],
+    "pro": [
+      "30dayTrendsAndStats",
+      "twoDateComparison",
+      "metricCorrelation",
+      "multipleGoals",
+      "onlineAIWithOwnKey"
+    ],
+    "conversationModes": ["local", "api", "localPlusApi"],
+    "widgets": {
+      "available": true,
+      "minIos": "17.0",
+      "surfaces": ["homeSmall", "homeMedium", "lockCircular", "lockRectangular"],
+      "realtimeMonitoring": false
+    },
+    "voice": {
+      "onDeviceOnly": true,
+      "cloudFallback": false,
+      "maxSeconds": 55,
+      "reviewBeforeSend": true
+    },
+    "account": false,
+    "ads": false,
+    "behavioralTracking": false,
+    "developerAiProxy": false,
+    "byok": true
+  },
+  "dataPractices": {
+    "controllerHoldsHealthData": false,
+    "localFirst": true,
+    "noDeveloperAccount": true,
+    "noInAppHealthExport": true,
+    "noCrashSdk": true,
+    "noAnalyticsSdk": true,
+    "noAdSdk": true,
+    "photos": {
+      "used": true,
+      "api": "PHPicker",
+      "purpose": "optional local avatar",
+      "camera": false,
+      "sentToAi": false
+    },
+    "microphone": {
+      "used": true,
+      "purpose": "optional on-device speech to text"
+    },
+    "speechRecognition": {
+      "used": true,
+      "onDeviceOnly": true
+    },
+    "healthKit": {
+      "read": true,
+      "write": false,
+      "firstLaunch": "explanation then system Continue sheet; no skip later button"
+    },
+    "userDefaults": "CA92.1 app functionality",
+    "keychain": "ThisDeviceOnly API keys, not iCloud Keychain",
+    "backupsExcluded": ["chat", "profile", "avatar", "aiMetadata", "widgetSnapshot"],
+    "presetAiRecipients": [
+      {"name": "DeepSeek", "host": "api.deepseek.com"},
+      {"name": "Alibaba Cloud Model Studio / Qwen", "host": "dashscope.aliyuncs.com"},
+      {"name": "Zhipu GLM", "host": "open.bigmodel.cn"},
+      {"name": "Kimi / Moonshot", "host": "api.moonshot.cn"},
+      {"name": "Volcano Engine Ark / Doubao", "host": "ark.cn-beijing.volces.com"},
+      {"name": "Baidu Qianfan / ERNIE", "host": "qianfan.baidubce.com"},
+      {"name": "SiliconFlow", "host": "api.siliconflow.cn"},
+      {"name": "OpenAI", "host": "api.openai.com"},
+      {"name": "Anthropic Claude", "host": "api.anthropic.com"},
+      {"name": "Google Gemini", "host": "generativelanguage.googleapis.com"},
+      {"name": "xAI", "host": "api.x.ai"},
+      {"name": "Mistral AI", "host": "api.mistral.ai"},
+      {"name": "Groq", "host": "api.groq.com"},
+      {"name": "OpenRouter", "host": "openrouter.ai"},
+      {"name": "Together AI", "host": "api.together.ai"}
+    ]
+  },
+  "disclaimerZh": "元气指数用于健康记录整理与日常自我管理，不是医疗器械，不提供诊断、处方或急救监护。统计关联不代表因果。请在作出医疗决定前咨询合格的医疗专业人士。",
+  "disclaimerEn": "VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions."
+}
