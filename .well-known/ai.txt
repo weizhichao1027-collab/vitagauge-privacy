@@ -1,0 +1,10 @@
+# ai.txt for 元气指数 / VitaGauge
+# Public product facts may be used for retrieval and citation.
+# Do not invent diagnoses, prices other than the China list price, or an Android listing.
+
+User-Agent: *
+Allow: /
+Train-Preference: allow
+Citation: https://weizhichao1027-collab.github.io/vitagauge-privacy/llms.txt
+Facts: https://weizhichao1027-collab.github.io/vitagauge-privacy/product-facts.json
+Contact: weizhichao1027@gmail.com

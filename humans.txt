@@ -1,0 +1,10 @@
+/* TEAM */
+Developer: 智超 卫 / zhichao wei
+Contact: weizhichao1027@gmail.com
+From: China
+
+/* SITE */
+Last review: 2026-09-18
+Standards: HTML, CSS, JSON-LD
+Software: static GitHub Pages
+Do not invent medical claims.

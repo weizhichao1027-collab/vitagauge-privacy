@@ -1,0 +1,28 @@
+{
+  "name": "元气指数 / VitaGauge",
+  "short_name": "元气指数",
+  "description": "把 Apple 健康中的日常记录，变成更容易理解的摘要和趋势。无需注册账户，也无需配置 API，就能开始使用本地功能。",
+  "start_url": "https://weizhichao1027-collab.github.io/vitagauge-privacy/app/",
+  "scope": "https://weizhichao1027-collab.github.io/vitagauge-privacy/",
+  "display": "browser",
+  "lang": "zh-Hans",
+  "background_color": "#eef3ea",
+  "theme_color": "#21543c",
+  "icons": [
+    {
+      "src": "https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://weizhichao1027-collab.github.io/vitagauge-privacy/assets/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}

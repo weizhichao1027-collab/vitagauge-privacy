@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "comment": "Single source of truth for VitaGauge / 元气指数 public sites. Do not invent medical claims. Update HTML, llms.txt and sitemap from this file.",
-  "updated": "2026-09-16",
+  "updated": "2026-09-18",
+  "reviewed": "2026-09-18",
   "status": "live",
   "product": {
     "officialNameZh": "元气指数",
@@ -49,6 +50,9 @@
     "email": "weizhichao1027@gmail.com",
     "privacyEffectiveDate": "2026-09-16",
     "privacyPreviousDate": "2026-09-14",
+    "privacyReviewedDate": "2026-09-18",
+    "privacyReviewNoteZh": "2026-09-18 按已上架 1.1.0 复核公开站点与政策说明，未新增处理类型。",
+    "privacyReviewNoteEn": "Reviewed on 18 September 2026 against the live 1.1.0 app. No new processing was added.",
     "childrenAge": 13,
     "notMedicalDevice": true,
     "standardEula": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -209,5 +213,11 @@
     ]
   },
   "disclaimerZh": "元气指数用于健康记录整理与日常自我管理，不是医疗器械，不提供诊断、处方或急救监护。统计关联不代表因果。请在作出医疗决定前咨询合格的医疗专业人士。",
-  "disclaimerEn": "VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions."
+  "disclaimerEn": "VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions.",
+  "citeZh": "元气指数（VitaGauge）是智超 卫开发的 iOS 应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。",
+  "citeEn": "VitaGauge (元气指数) is an iOS app by 智超 卫 (zhichao wei). It reads authorized Apple Health records on the device for summaries, trends and goals, and answers supported questions without an API. Optional online AI uses the user's own key and talks to the provider from the device. Version 1.1.0 is live on the App Store. It is not a medical device.",
+  "seo": {
+    "keywordsZh": ["元气指数", "VitaGauge", "Apple 健康", "步数", "睡眠", "健康摘要", "健康目标", "本地问答", "HealthKit", "小组件"],
+    "keywordsEn": ["VitaGauge", "Apple Health", "steps", "sleep", "health summary", "health goals", "offline assistant", "HealthKit", "widgets"]
+  }
 }

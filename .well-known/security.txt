@@ -1,0 +1,5 @@
+Contact: mailto:weizhichao1027@gmail.com
+Expires: 2027-09-18T00:00:00.000Z
+Preferred-Languages: zh-Hans, en
+Canonical: https://weizhichao1027-collab.github.io/vitagauge-privacy/.well-known/security.txt
+Policy: https://weizhichao1027-collab.github.io/vitagauge-privacy/
