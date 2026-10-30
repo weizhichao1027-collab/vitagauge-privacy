@@ -11,7 +11,7 @@
 | 隐私 / Privacy URL | [隐私政策](https://weizhichao1027-collab.github.io/vitagauge-privacy/) | [Privacy](https://weizhichao1027-collab.github.io/vitagauge-privacy/en/) |
 | 官方介绍 | [官方网站](https://weizhichao1027-collab.github.io/vitagauge-privacy/app/) | [Official site](https://weizhichao1027-collab.github.io/vitagauge-privacy/en/app/) |
 
-另含 `/terms/`、`/sources/` 与对应英文页面。隐私根路径保持不变，避免已上架 App 和商店资料中的链接失效。[App Store](https://apps.apple.com/app/id6762522305) 使用按账户地区打开的地址；不承诺所有国家或地区均可下载或购买。无 Android / Google Play 版本。
+另含 `/terms/`、`/sources/` 与对应英文页面。隐私根路径保持不变，避免已上架 App 和商店资料中的链接失效。[App Store](https://apps.apple.com/app/id6762522305) 使用按账户地区打开的地址，中文下载区另提供美国区商店详情备用链接；不承诺所有国家或地区均可下载或购买。无 Android / Google Play 版本。
 
 ## 本轮更新
 

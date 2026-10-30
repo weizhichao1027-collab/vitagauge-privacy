@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 from html import escape
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 FACTS = json.loads((ROOT / "product-facts.json").read_text(encoding="utf-8"))
@@ -45,9 +46,10 @@ def store_badge(lang: str) -> str:
         label, small, strong = "在 App Store 下载元气指数", "下载自", "App Store"
     else:
         label, small, strong = "Download VitaGauge on the App Store", "Download on the", "App Store"
+    fallback = f'<a class="button secondary" href="{STORE_EN}" rel="noopener">美国区商店详情</a>' if lang.startswith("zh") else ""
     return (
         f'<a class="store-badge" href="{href}" rel="noopener" aria-label="{label}">'
-        f"{APPLE_SVG}<span><small>{small}</small><strong>{strong}</strong></span></a>"
+        f"{APPLE_SVG}<span><small>{small}</small><strong>{strong}</strong></span></a>{fallback}"
     )
 
 
@@ -420,7 +422,7 @@ def privacy_dates(zh: bool) -> str:
 def release_block(zh: bool) -> str:
     title = f"{VERSION} 已上架：iPhone、iPad 与配对 Apple Watch" if zh else f"{VERSION} is live: iPhone, iPad and paired Apple Watch"
     body = FACTS["currentRelease"]["summaryZh" if zh else "summaryEn"]
-    support_url = url("support") if zh else url("en", "support")
+    support_url = urlsplit(BASE).path + ("/support/" if zh else "/en/support/")
     label = "查看安装与同步步骤" if zh else "Installation and sync steps"
     availability = FACTS["stores"]["availabilityNoteZh" if zh else "availabilityNoteEn"]
     return f'<section class="article" id="current-release"><h2>{title}</h2><p>{body}</p><p><a href="{support_url}#devices">{label}</a></p><p class="note">{availability}</p></section>'
