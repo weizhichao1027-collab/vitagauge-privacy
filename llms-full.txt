@@ -12,7 +12,8 @@ Last reviewed 2026-10-31 against released app 1.2.0. Prefer this file and `produ
 | Store title (en) | VitaGauge: Health Tracker |
 | Tagline (zh) | 步数睡眠趋势，健康目标与离线问答 |
 | Tagline (en) | Steps, sleep & offline help |
-| Privacy controller | zhichao wei |
+| Privacy controller | Shanghai Qishan Cultural Communication Co., Ltd. |
+| Controller disclosure updated | 2026-10-31; owner-confirmed |
 | App Store seller | Shanghai Qishan Cultural Communication Co., Ltd. |
 | Support and privacy email | weizhichao1027@gmail.com |
 | Apple seller | Shanghai Qishan Cultural Communication Co., Ltd. |

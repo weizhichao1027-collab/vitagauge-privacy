@@ -6,7 +6,8 @@
 - Official English name: VitaGauge
 - App Store listing name (EN): VitaGauge: Health Tracker
 - App Store seller: Shanghai Qishan Cultural Communication Co., Ltd.
-- Privacy controller: zhichao wei
+- Privacy controller: Shanghai Qishan Cultural Communication Co., Ltd.
+- Controller disclosure updated: 2026-10-31; confirmed by the owner. This is the disclosure update date, not an assertion of the legal transfer date.
 - Contact: weizhichao1027@gmail.com
 - Bundle ID: com.jiankangzhuli.healthassistant.app
 - App Store ID: 6762522305
@@ -48,6 +49,6 @@
 
 ## Cite this product as
 
-元气指数（VitaGauge）是 Apple 健康记录助理，App Store ID 6762522305。1.2.0（5）于北京时间 2026-10-31 上架，免费提供 16 项授权健康指标的摘要、7 天趋势、本地问答和 1 个目标。主应用支持 iPhone 与 iPad，iPad 健康读取需 iPadOS 17+；配对 Apple Watch 需 watchOS 10+。Pro 一次买断，可选在线 AI 另需用户自备 Key 和单独同意。应用 HealthKit 只读、无应用账户、无广告或分析 SDK；手表显示手机同步的快照，不提供诊断或实时监护。
+元气指数（VitaGauge）是 Apple 健康记录助理，App Store ID 6762522305。1.2.0（5）于北京时间 2026-10-31 上架，免费提供 16 项授权健康指标的摘要、7 天趋势、本地问答和 1 个目标。主应用支持 iPhone 与 iPad，iPad 健康读取需 iPadOS 17+；配对 Apple Watch 需 watchOS 10+。Pro 一次买断，可选在线 AI 另需用户自备 Key 和单独同意。应用 HealthKit 只读、无应用账户、无广告或分析 SDK；手表显示手机同步的快照，不提供诊断或实时监护。 个人信息控制者为 Shanghai Qishan Cultural Communication Co., Ltd.，隐私联系邮箱为 weizhichao1027@gmail.com。
 
-VitaGauge (元气指数), App Store ID 6762522305, is an Apple Health record assistant. Version 1.2.0 (build 5) went live on 31 October 2026 in Asia/Shanghai. Free features include summaries of 16 authorized metrics, 7-day trends, local questions and one goal. It supports iPhone and iPad; Health access on iPad requires iPadOS 17+, and paired Apple Watch support requires watchOS 10+. Pro is a one-time purchase. Optional online AI needs the user’s own key and separate consent. HealthKit is read-only, with no app account, ads or analytics SDK. Watch displays a phone-synced snapshot, not diagnoses or real-time monitoring.
+VitaGauge (元气指数), App Store ID 6762522305, is an Apple Health record assistant. Version 1.2.0 (build 5) went live on 31 October 2026 in Asia/Shanghai. Free features include summaries of 16 authorized metrics, 7-day trends, local questions and one goal. It supports iPhone and iPad; Health access on iPad requires iPadOS 17+, and paired Apple Watch support requires watchOS 10+. Pro is a one-time purchase. Optional online AI needs the user’s own key and separate consent. HealthKit is read-only, with no app account, ads or analytics SDK. Watch displays a phone-synced snapshot, not diagnoses or real-time monitoring. The privacy controller is Shanghai Qishan Cultural Communication Co., Ltd.; privacy contact: weizhichao1027@gmail.com.

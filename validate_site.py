@@ -330,6 +330,27 @@ class Validator:
             self.check("manifest-valid-json", False, "site.webmanifest", str(error))
         self.check("nojekyll-present", (self.root / ".nojekyll").is_file(), ".nojekyll")
 
+    def controller_disclosure(self) -> None:
+        legal = self.facts["legal"]
+        updated = legal.get("privacyControllerDisclosureUpdated", "")
+        try:
+            valid_date = date.fromisoformat(updated) <= date.fromisoformat(self.facts["reviewed"])
+        except ValueError:
+            valid_date = False
+        self.check("controller-disclosure-date", valid_date, "product-facts.json")
+        for route, key in (("/", "controllerZh"), ("/en/", "controllerEn")):
+            url = self.base + route
+            document = self.pages[url]
+            file = self.page_files[url]
+            controller = legal.get(key, "")
+            section = next((node for node in document.elements if node.attrs.get("id") == "s1"), None)
+            self.check("privacy-controller-visible", bool(controller) and section is not None and controller in section.text(visible=True), file)
+            self.check("privacy-controller-meta", bool(controller) and any(controller in value for value in document.metas("description")), file)
+            self.check("privacy-controller-contact", section is not None and legal["email"] in section.text(visible=True), file)
+            self.check("privacy-controller-date-visible", bool(updated) and updated in document.root.text(visible=True), file)
+        for file in ("llms.txt", "llms-full.txt", "humans.txt"):
+            self.check("machine-controller", bool(legal["controllerEn"]) and legal["controllerEn"] in self.read(file), file)
+
     def public_content(self) -> None:
         for path in sorted(self.root.rglob("*")):
             if not path.is_file() or ".git" in path.relative_to(self.root).parts:
@@ -379,6 +400,7 @@ class Validator:
         self.all_references()
         self.sitemap(expected)
         self.machine_files()
+        self.controller_disclosure()
         self.public_content()
         errors = [check for check in self.checks if not check["passed"]]
         self.check("internal-references-complete", not any(check["check"] in {"internal-reference", "internal-anchor"} for check in errors), detail=f"checked={self.references}")

@@ -26,6 +26,8 @@ BUNDLE = FACTS["product"]["bundleId"]
 VERSION = FACTS["product"]["version"]
 RELEASED = FACTS["product"]["released"]
 CONTROLLER = FACTS["legal"]["controllerEn"]
+CONTROLLER_ZH = FACTS["legal"]["controllerZh"]
+CONTROLLER_UPDATED = FACTS["legal"]["privacyControllerDisclosureUpdated"]
 SELLER = FACTS["legal"]["appleSellerName"]
 FILE_SIZE = FACTS["product"].get("fileSizeBytes", 7877632)
 
@@ -417,8 +419,8 @@ def cite_box(lang: str) -> str:
 
 def privacy_dates(zh: bool) -> str:
     if zh:
-        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}，适用于已上架 {VERSION}，含配对手表同步说明。"
-    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Reviewed {REVIEWED} for released {VERSION}, including paired-watch sync."
+        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}，适用于已上架 {VERSION}，含配对手表同步说明。控制者披露更新：{CONTROLLER_UPDATED}。"
+    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Reviewed {REVIEWED} for released {VERSION}, including paired-watch sync. Controller disclosure updated {CONTROLLER_UPDATED}."
 
 
 def release_block(zh: bool) -> str:
@@ -1193,7 +1195,7 @@ def page_privacy_zh() -> str:
     ])
     return (
         head(lang="zh-Hans", title="隐私政策：元气指数 VitaGauge 如何处理健康与 AI 数据",
-             description="元气指数隐私政策：控制者智超 卫，HealthKit 只读、可选照片头像、端侧语音、自备 Key 的第三方 AI、无分析 SDK、内购由 Apple 处理。生效 2026-09-16，复核 2026-10-31，适用于已上架 1.2.0 的配对手表同步。",
+             description=f"元气指数隐私政策：个人信息控制者 {CONTROLLER_ZH}。说明 HealthKit 只读、配对 Apple Watch 同步、端侧语音、自备 Key 的第三方 AI 与数据删除。控制者披露更新 {CONTROLLER_UPDATED}。",
              canonical=url(), alt=url("en"), depth="", og_image="og-privacy.png", extra=extra)
         + header("zh", "privacy", "")
         + f"""
@@ -1235,7 +1237,7 @@ def page_privacy_zh() -> str:
 <article class="policy-card article" id="policy">
   <section id="s1">
     <h2>控制者与范围</h2>
-    <p>本政策适用于 iOS 应用「元气指数」（英文 VitaGauge，Bundle ID <span translate="no">{BUNDLE}</span>，App Store ID {APP_ID}）以及本 GitHub Pages 网站。个人信息控制者为开发者<strong>智超 卫</strong>（对外也写作 zhichao wei）。联系邮箱 {EMAIL}。App Store 当前销售方为 {SELLER}。</p>
+    <p>本政策适用于 iOS 应用「元气指数」（英文 VitaGauge，Bundle ID <span translate="no">{BUNDLE}</span>，App Store ID {APP_ID}）以及本 GitHub Pages 网站。个人信息控制者为<strong>{CONTROLLER_ZH}</strong>，负责本应用及本网站在本政策范围内的个人信息处理和隐私请求。联系邮箱 {EMAIL}。App Store 当前销售方为 {SELLER}。</p>
     <p>应用不要求注册开发者账户，也不运营接收健康问答的 AI 中转服务器。Apple 作为 App Store 与 StoreKit 的独立控制者处理下载和内购。</p>
   </section>
   <section id="s2">
@@ -1317,7 +1319,7 @@ def page_privacy_en() -> str:
     ])
     return (
         head(lang="en", title="Privacy Policy: how VitaGauge handles health and AI data",
-             description="VitaGauge privacy policy: controller 智超 卫 (zhichao wei). HealthKit read-only, optional photo avatar, on-device speech, BYOK third-party AI, no analytics SDK, Apple IAP. Effective 16 September 2026, reviewed 31 October 2026, including paired-watch sync in released 1.2.0.",
+             description=f"VitaGauge privacy policy. Controller: {CONTROLLER}. HealthKit read-only, paired Apple Watch sync, on-device speech, optional BYOK AI and data deletion. Controller disclosure updated {CONTROLLER_UPDATED}.",
              canonical=url("en"), alt=url(), depth="../", og_image="og-privacy.png", extra=extra)
         + header("en", "privacy", "../")
         + f"""
@@ -1359,7 +1361,7 @@ def page_privacy_en() -> str:
 <article class="policy-card article" id="policy">
   <section id="s1">
     <h2>Controller and scope</h2>
-    <p>This policy covers the iOS app VitaGauge (元气指数, bundle ID <span translate="no">{BUNDLE}</span>, App Store ID {APP_ID}) and this GitHub Pages site. The controller is <strong>智超 卫</strong> (zhichao wei), email {EMAIL}. The current App Store seller is {SELLER}.</p>
+    <p>This policy covers the iOS app VitaGauge (元气指数, bundle ID <span translate="no">{BUNDLE}</span>, App Store ID {APP_ID}) and this GitHub Pages site. The privacy controller is <strong>{CONTROLLER}</strong>, responsible for personal information processing and privacy requests within the scope of this policy. Contact: {EMAIL}. The current App Store seller is {SELLER}.</p>
     <p>The app has no developer account and no server that relays health chats. Apple is an independent controller for App Store distribution and StoreKit purchases.</p>
   </section>
   <section id="s2">
@@ -1670,6 +1672,7 @@ def write_geo_files() -> None:
 - App Store listing name (EN): VitaGauge: Health Tracker
 - App Store seller: {SELLER}
 - Privacy controller: {CONTROLLER}
+- Controller disclosure updated: {CONTROLLER_UPDATED}; confirmed by the owner. This is the disclosure update date, not an assertion of the legal transfer date.
 - Contact: {EMAIL}
 - Bundle ID: {BUNDLE}
 - App Store ID: {APP_ID}
@@ -1731,6 +1734,7 @@ Last reviewed {REVIEWED} against released app {VERSION}. Prefer this file and `p
 | Tagline (zh) | {FACTS["product"]["taglineZh"]} |
 | Tagline (en) | {FACTS["product"]["taglineEn"]} |
 | Privacy controller | {CONTROLLER} |
+| Controller disclosure updated | {CONTROLLER_UPDATED}; owner-confirmed |
 | App Store seller | {SELLER} |
 | Support and privacy email | {EMAIL} |
 | Apple seller | {FACTS["legal"]["appleSellerName"]} |

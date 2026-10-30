@@ -62,9 +62,9 @@
     "watchMinimumOs": "10.0"
   },
   "legal": {
-    "controllerZh": "智超 卫",
-    "controllerEn": "zhichao wei",
-    "controllerLatin": "zhichao wei",
+    "controllerZh": "Shanghai Qishan Cultural Communication Co., Ltd.",
+    "controllerEn": "Shanghai Qishan Cultural Communication Co., Ltd.",
+    "controllerLatin": "Shanghai Qishan Cultural Communication Co., Ltd.",
     "appleSellerName": "Shanghai Qishan Cultural Communication Co., Ltd.",
     "appleTeamId": "ZDJSPM4T33",
     "appleArtistId": 1891134548,
@@ -72,11 +72,13 @@
     "privacyEffectiveDate": "2026-09-16",
     "privacyPreviousDate": "2026-09-14",
     "privacyReviewedDate": "2026-10-31",
-    "privacyReviewNoteZh": "2026-10-31 按已上架 1.2.0 复核，确认原生 iPad、扩展小组件与配对 Apple Watch 的数据处理说明现已适用。政策原生效日保持 2026-09-16；本次更新发布状态与说明，不新增应用数据处理。",
-    "privacyReviewNoteEn": "Reviewed on 31 October 2026 against released version 1.2.0. Native iPad, expanded widgets and paired Apple Watch disclosures now apply. The policy retains its original effective date of 16 September 2026; this update clarifies release status and existing processing without adding app processing.",
+    "privacyReviewNoteZh": "2026-10-31 按已上架 1.2.0 复核，并根据持有人确认，将个人信息控制者披露更新为 Shanghai Qishan Cultural Communication Co., Ltd.，联系邮箱不变。原政策生效日为 2026-09-16；本次控制者披露更新不改变健康读取、配对手表同步、本地存储或可选第三方 AI 的处理方式。",
+    "privacyReviewNoteEn": "Reviewed on 31 October 2026 against released version 1.2.0. Following the owner’s confirmation, the privacy controller disclosure is updated to Shanghai Qishan Cultural Communication Co., Ltd.; the contact email is unchanged. The original policy effective date remains 16 September 2026. This controller disclosure update does not change Health access, paired-watch sync, local storage or optional third-party AI processing.",
     "childrenAge": 13,
     "notMedicalDevice": true,
-    "standardEula": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+    "standardEula": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+    "privacyControllerConfirmedByOwner": true,
+    "privacyControllerDisclosureUpdated": "2026-10-31"
   },
   "stores": {
     "appleId": "6762522305",
@@ -307,8 +309,8 @@
   },
   "disclaimerZh": "元气指数用于健康记录整理与日常自我管理，不是医疗器械，不提供诊断、处方或急救监护。统计关联不代表因果。请在作出医疗决定前咨询合格的医疗专业人士。",
   "disclaimerEn": "VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions.",
-  "citeZh": "元气指数（VitaGauge）是 Apple 健康记录助理，App Store ID 6762522305。1.2.0（5）于北京时间 2026-10-31 上架，免费提供 16 项授权健康指标的摘要、7 天趋势、本地问答和 1 个目标。主应用支持 iPhone 与 iPad，iPad 健康读取需 iPadOS 17+；配对 Apple Watch 需 watchOS 10+。Pro 一次买断，可选在线 AI 另需用户自备 Key 和单独同意。应用 HealthKit 只读、无应用账户、无广告或分析 SDK；手表显示手机同步的快照，不提供诊断或实时监护。",
-  "citeEn": "VitaGauge (元气指数), App Store ID 6762522305, is an Apple Health record assistant. Version 1.2.0 (build 5) went live on 31 October 2026 in Asia/Shanghai. Free features include summaries of 16 authorized metrics, 7-day trends, local questions and one goal. It supports iPhone and iPad; Health access on iPad requires iPadOS 17+, and paired Apple Watch support requires watchOS 10+. Pro is a one-time purchase. Optional online AI needs the user’s own key and separate consent. HealthKit is read-only, with no app account, ads or analytics SDK. Watch displays a phone-synced snapshot, not diagnoses or real-time monitoring.",
+  "citeZh": "元气指数（VitaGauge）是 Apple 健康记录助理，App Store ID 6762522305。1.2.0（5）于北京时间 2026-10-31 上架，免费提供 16 项授权健康指标的摘要、7 天趋势、本地问答和 1 个目标。主应用支持 iPhone 与 iPad，iPad 健康读取需 iPadOS 17+；配对 Apple Watch 需 watchOS 10+。Pro 一次买断，可选在线 AI 另需用户自备 Key 和单独同意。应用 HealthKit 只读、无应用账户、无广告或分析 SDK；手表显示手机同步的快照，不提供诊断或实时监护。 个人信息控制者为 Shanghai Qishan Cultural Communication Co., Ltd.，隐私联系邮箱为 weizhichao1027@gmail.com。",
+  "citeEn": "VitaGauge (元气指数), App Store ID 6762522305, is an Apple Health record assistant. Version 1.2.0 (build 5) went live on 31 October 2026 in Asia/Shanghai. Free features include summaries of 16 authorized metrics, 7-day trends, local questions and one goal. It supports iPhone and iPad; Health access on iPad requires iPadOS 17+, and paired Apple Watch support requires watchOS 10+. Pro is a one-time purchase. Optional online AI needs the user’s own key and separate consent. HealthKit is read-only, with no app account, ads or analytics SDK. Watch displays a phone-synced snapshot, not diagnoses or real-time monitoring. The privacy controller is Shanghai Qishan Cultural Communication Co., Ltd.; privacy contact: weizhichao1027@gmail.com.",
   "seo": {
     "keywordsZh": [
       "元气指数",
