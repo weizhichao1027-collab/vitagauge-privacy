@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import json
-from datetime import date
+from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -21,6 +21,9 @@ EMAIL = FACTS["legal"]["email"]
 APP_ID = FACTS["stores"]["appleId"]
 BUNDLE = FACTS["product"]["bundleId"]
 VERSION = FACTS["product"]["version"]
+RELEASED = FACTS["product"]["released"]
+CONTROLLER = FACTS["legal"]["controllerEn"]
+SELLER = FACTS["legal"]["appleSellerName"]
 FILE_SIZE = FACTS["product"].get("fileSizeBytes", 7877632)
 
 
@@ -61,8 +64,8 @@ def org() -> dict:
     return {
         "@type": "Organization",
         "@id": f"{BASE}/#org",
-        "name": "智超 卫",
-        "alternateName": ["zhichao wei", "元气指数", "VitaGauge"],
+        "name": SELLER,
+        "alternateName": ["元气指数", "VitaGauge"],
         "email": EMAIL,
         "url": url("app"),
         "logo": f"{BASE}/assets/icon.png",
@@ -91,7 +94,8 @@ def software(lang: str) -> dict:
         "alternateName": ["VitaGauge", "VitaGauge: Health Tracker", "元气指数"],
         "applicationCategory": "HealthApplication",
         "applicationSubCategory": "LifestyleApplication",
-        "operatingSystem": "iOS 15.0 or later",
+        "operatingSystem": "iOS 15+; iPadOS 15+ (Health data: iPadOS 17+); paired watchOS 10+",
+        "availableOnDevice": ["iPhone", "iPad", "Apple Watch paired with iPhone"],
         "softwareVersion": VERSION,
         "datePublished": FACTS["product"]["firstReleased"],
         "dateModified": FACTS["product"]["released"],
@@ -108,6 +112,8 @@ def software(lang: str) -> dict:
                 "健康目标",
                 "主屏幕与锁屏小组件",
                 "自备 Key 的在线 AI",
+                "原生 iPad 布局（健康数据需 iPadOS 17+）",
+                "配对 Apple Watch 五项摘要与表盘组件",
             ]
             if zh
             else [
@@ -118,34 +124,18 @@ def software(lang: str) -> dict:
                 "Health goals",
                 "Home and Lock Screen widgets",
                 "BYOK online AI",
+                "Native iPad layouts (Health data on iPadOS 17+)",
+                "Paired Apple Watch summary and complications",
             ]
         ),
         "offers": {
-            "@type": "AggregateOffer",
-            "lowPrice": "0",
-            "highPrice": str(FACTS["iap"]["chinaLaunchPriceCNY"]),
-            "priceCurrency": "CNY",
-            "offerCount": 2,
-            "offers": [
-                {
-                    "@type": "Offer",
-                    "name": "元气指数免费下载" if zh else "VitaGauge free download",
-                    "price": "0",
-                    "priceCurrency": "CNY",
-                    "availability": "https://schema.org/InStock",
-                    "url": STORE_ZH if zh else STORE_EN,
-                },
-                {
-                    "@type": "Offer",
-                    "name": "VitaGauge Pro",
-                    "price": str(FACTS["iap"]["chinaLaunchPriceCNY"]),
-                    "priceCurrency": "CNY",
-                    "availability": "https://schema.org/InStock",
-                    "category": "https://schema.org/NonConsumable",
-                    "description": FACTS["iap"]["priceNoteZh"] if zh else FACTS["iap"]["priceNoteEn"],
-                    "url": url("features") if zh else url("en", "features"),
-                },
-            ],
+            "@type": "Offer",
+            "name": "免费下载，含可选 Pro 内购" if zh else "Free download with optional Pro IAP",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": STORE,
+            "description": FACTS["iap"]["priceNoteZh"] if zh else FACTS["iap"]["priceNoteEn"],
         },
         "downloadUrl": STORE_ZH if zh else STORE_EN,
         "installUrl": STORE,
@@ -153,10 +143,10 @@ def software(lang: str) -> dict:
         "url": url("app") if zh else url("en", "app"),
         "image": f"{BASE}/assets/icon.png",
         "screenshot": [
-            f"{BASE}/assets/{prefix}-summary.png",
-            f"{BASE}/assets/{prefix}-assistant.png",
-            f"{BASE}/assets/{prefix}-trend.png",
-            f"{BASE}/assets/{prefix}-goal.png",
+            f"{BASE}/assets/{prefix}-summary.webp",
+            f"{BASE}/assets/{prefix}-assistant.webp",
+            f"{BASE}/assets/{prefix}-trend.webp",
+            f"{BASE}/assets/{prefix}-goal.webp",
         ],
         "author": {"@id": f"{BASE}/#org"},
         "publisher": {"@id": f"{BASE}/#org"},
@@ -223,8 +213,16 @@ def head(
     locale = "zh_CN" if lang.startswith("zh") else "en_US"
     alt_locale = "en_US" if lang.startswith("zh") else "zh_CN"
     icon = asset(depth, "icon.png")
-    image = f"{BASE}/assets/{og_image}"
-    robots = "index,follow,max-image-preview:large,max-snippet:-1"
+    image = f"{BASE}/assets/{og_image}?v={REVIEWED}"
+    indexable = not canonical.endswith("/404.html")
+    robots = "index,follow,max-image-preview:large,max-snippet:-1" if indexable else "noindex,follow"
+    page_graph = json_ld([{
+        "@type": "WebPage", "@id": canonical + "#webpage", "url": canonical,
+        "name": title, "description": description, "inLanguage": lang,
+        "dateModified": REVIEWED, "isPartOf": {"@id": BASE + "/#website"},
+        "about": {"@id": BASE + "/#app"}, "publisher": {"@id": BASE + "/#org"},
+    }])
+    title, description = escape(title, quote=True), escape(description, quote=True)
     keywords = (
         ",".join(FACTS["seo"]["keywordsZh"])
         if lang.startswith("zh")
@@ -241,7 +239,7 @@ def head(
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="{robots}">
 <meta name="googlebot" content="{robots}">
-<meta name="author" content="智超 卫">
+<meta name="author" content="{escape(SELLER, quote=True)}">
 <meta name="description" content="{description}">
 <meta name="keywords" content="{keywords}">
 <title>{title}</title>
@@ -275,6 +273,7 @@ def head(
 <link rel="apple-touch-icon" href="{asset(depth, 'apple-touch-icon.png')}">
 <link rel="stylesheet" href="{depth}site.css">
 {extra}
+{page_graph}
 </head>
 """
 
@@ -344,9 +343,10 @@ def footer(lang: str, depth: str) -> str:
         <a href="{depth or './'}">隐私政策</a>
         <a href="{depth}terms/">使用说明</a>
         <a href="{depth}sources/">资料来源</a>
+        <a href="{depth}sitemap.xml">网站地图</a>
         <a href="{STORE_ZH}" rel="noopener">App Store</a>"""
         note = FACTS["disclaimerZh"]
-        copy = f'© 2026 智超 卫 · <a href="mailto:{EMAIL}">{EMAIL}</a>'
+        copy = f'© 2026 {SELLER} · <a href="mailto:{EMAIL}">{EMAIL}</a>'
         brand = "元气指数 · VitaGauge"
     else:
         links = f"""<a href="{depth}en/app/">Official site</a>
@@ -355,9 +355,10 @@ def footer(lang: str, depth: str) -> str:
         <a href="{depth}en/">Privacy</a>
         <a href="{depth}en/terms/">Use &amp; purchases</a>
         <a href="{depth}en/sources/">Sources</a>
+        <a href="{depth}sitemap.xml">Sitemap</a>
         <a href="{STORE_EN}" rel="noopener">App Store</a>"""
         note = FACTS["disclaimerEn"]
-        copy = f'© 2026 zhichao wei · <a href="mailto:{EMAIL}">{EMAIL}</a>'
+        copy = f'© 2026 {SELLER} · <a href="mailto:{EMAIL}">{EMAIL}</a>'
         brand = "VitaGauge · 元气指数"
     return f"""</main>
 <footer class="footer">
@@ -412,14 +413,17 @@ def cite_box(lang: str) -> str:
 
 def privacy_dates(zh: bool) -> str:
     if zh:
-        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}，补充待发布 1.2.0 的配对手表同步说明。"
-    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Page reviewed {REVIEWED}, with paired-watch disclosure for the planned 1.2.0 release."
+        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}，适用于已上架 {VERSION}，含配对手表同步说明。"
+    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Reviewed {REVIEWED} for released {VERSION}, including paired-watch sync."
 
 
-def pending_release_block(zh: bool) -> str:
-    title = "1.2.0 准备中的设备支持" if zh else "Device support planned for 1.2.0"
-    body = FACTS["pendingRelease"]["summaryZh" if zh else "summaryEn"]
-    return f'<section class="article" id="pending-release"><h2>{title}</h2><p>{body}</p></section>'
+def release_block(zh: bool) -> str:
+    title = f"{VERSION} 已上架：iPhone、iPad 与配对 Apple Watch" if zh else f"{VERSION} is live: iPhone, iPad and paired Apple Watch"
+    body = FACTS["currentRelease"]["summaryZh" if zh else "summaryEn"]
+    support_url = url("support") if zh else url("en", "support")
+    label = "查看安装与同步步骤" if zh else "Installation and sync steps"
+    availability = FACTS["stores"]["availabilityNoteZh" if zh else "availabilityNoteEn"]
+    return f'<section class="article" id="current-release"><h2>{title}</h2><p>{body}</p><p><a href="{support_url}#devices">{label}</a></p><p class="note">{availability}</p></section>'
 
 
 def howto_first_launch(zh: bool) -> dict:
@@ -463,8 +467,8 @@ def page_app_zh() -> str:
         crumbs([("元气指数", url("app"))]),
     ])
     return (
-        head(lang="zh-Hans", title="元气指数 VitaGauge：Apple 健康摘要、16 项趋势与本地问答",
-             description="元气指数已在 App Store 上架。查看授权后的 Apple 健康摘要与 16 项趋势，用本地助理查询步数和睡眠，也可建立健康目标。无需账户或 API 即可开始。不是医疗器械。",
+        head(lang="zh-Hans", title="元气指数 VitaGauge：iPhone、iPad 与 Apple Watch 健康记录",
+             description="元气指数 1.2.0 已上架：iPhone 与 iPad 健康摘要、16 项指标趋势、本地问答、目标和配对 Apple Watch。免费下载，无需应用账户；iPad 健康读取需 iPadOS 17+。",
              canonical=url("app"), alt=url("en", "app"), depth="../", og_image="og-default.png", extra=extra)
         + header("zh", "app", "../")
         + f"""
@@ -475,12 +479,12 @@ def page_app_zh() -> str:
     <h1>把每天的健康，看得更明白。</h1>
     <p class="lead">从你授权的 Apple 健康记录出发，查看摘要和趋势，建立一个小目标，也可以用平常的话问问自己的数据。本地功能不必注册，也不必配置 API。</p>
     <div class="actions">{store_badge("zh")}<a class="button secondary" href="../features/">功能与价格</a></div>
-    <p class="live"><i aria-hidden="true"></i>1.1.0 现已上架，含小组件、三种对话模式与 Pro 一次买断</p>
+    <p class="live"><i aria-hidden="true"></i>{VERSION} 现已上架，支持原生 iPad、配对 Apple Watch 与更多小组件</p>
   </div>
   <div class="hero-art">
     <figure>
-      <img class="screen" src="../assets/zh-Hans-summary.png" width="1242" height="2688" alt="元气指数健康摘要，示例为 6280 步、睡眠 7.5 小时" fetchpriority="high">
-      <figcaption>真实界面 · 合成示例数据，不是某位用户的记录</figcaption>
+      <img class="screen" src="../assets/zh-Hans-summary.webp" width="1206" height="2622" alt="元气指数健康摘要，示例为 6280 步、睡眠 7.5 小时" fetchpriority="high">
+      <figcaption>1.2.0 生产界面 · 合成示例数据，不是个人记录</figcaption>
     </figure>
   </div>
 </section>
@@ -497,21 +501,21 @@ def page_app_zh() -> str:
   </div>
   <div class="steps">
     <article class="step">
-      <figure><img class="screen" src="../assets/zh-Hans-summary.png" width="1242" height="2688" alt="健康摘要示例" loading="lazy"></figure>
+      <figure><img class="screen" src="../assets/zh-Hans-summary.webp" width="1206" height="2622" alt="健康摘要示例" loading="lazy"></figure>
       <div>
         <h3>看当天的摘要</h3>
         <p>把步数、睡眠、心率等已有记录放在同一页。没有记录就留空，不用 0 填补。部分指标需要 Apple Watch 或其他来源。</p>
       </div>
     </article>
     <article class="step">
-      <figure><img class="screen" src="../assets/zh-Hans-assistant.png" width="1290" height="2796" alt="本地助理按日期汇总步数、睡眠和活动能量" loading="lazy"></figure>
+      <figure><img class="screen" src="../assets/zh-Hans-assistant.webp" width="1206" height="2622" alt="本地助理按日期汇总步数、睡眠和活动能量" loading="lazy"></figure>
       <div>
         <h3>用本地助理提问</h3>
         <p>可以问「今天走了多少步」「最近七天每天步数」，再追问「那昨天呢」。本地助理用规则和计算，不是通用大模型，也不会下诊断。</p>
       </div>
     </article>
     <article class="step">
-      <figure><img class="widget" src="../assets/zh-Hans-widget.png" width="338" height="158" alt="主屏幕中号小组件显示步数、睡眠和活动能量" loading="lazy"></figure>
+      <figure><img class="widget" src="../assets/zh-Hans-widget.webp" width="1014" height="474" alt="主屏幕中号小组件显示步数、睡眠和活动能量" loading="lazy"></figure>
       <div>
         <h3>需要时再加深</h3>
         <p>免费含 1 个目标。iOS 17 可加主屏幕和锁屏小组件，显示最近一次同步，不是实时监测。Pro 解锁 30 天统计、两日比较、关联分析和在线 AI。</p>
@@ -553,7 +557,8 @@ def page_app_zh() -> str:
     </div>
   </div>
 </section>
-{pending_release_block(True)}
+{release_block(True)}
+{device_gallery(True)}
 {cite_box("zh")}
 <section class="section">
   <div class="banner">
@@ -566,19 +571,19 @@ def page_app_zh() -> str:
   <h2>界面一览</h2>
   <p class="note">下列截图由生产界面渲染，使用合成示例数据。</p>
   <div class="gallery">
-    <figure><img src="../assets/zh-Hans-summary.png" width="1242" height="2688" alt="健康摘要示例" loading="lazy"><figcaption>今日摘要</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-assistant.png" width="1290" height="2796" alt="本地记录问答示例" loading="lazy"><figcaption>记录问答</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-trend.png" width="1242" height="2688" alt="步数趋势示例" loading="lazy"><figcaption>步数趋势</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-goal.png" width="1242" height="2688" alt="健康目标示例" loading="lazy"><figcaption>健康目标</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-summary.webp" width="1206" height="2622" alt="健康摘要示例" loading="lazy"><figcaption>今日摘要</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-assistant.webp" width="1206" height="2622" alt="本地记录问答示例" loading="lazy"><figcaption>记录问答</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-trend.webp" width="1206" height="2622" alt="步数趋势示例" loading="lazy"><figcaption>步数趋势</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-goal.webp" width="1206" height="2622" alt="健康目标示例" loading="lazy"><figcaption>健康目标</figcaption></figure>
   </div>
 </section>
 <section class="section article">
   <h2>关于元气指数</h2>
   <dl class="facts">
     <dt>正式名称</dt><dd translate="no">元气指数 / VitaGauge</dd>
-    <dt>开发者</dt><dd>智超 卫（zhichao wei）</dd>
-    <dt>版本</dt><dd>1.1.0，2026 年 9 月 15 日上架</dd>
-    <dt>系统</dt><dd>iOS 15 及以上；小组件需 iOS 17</dd>
+    <dt>App Store 销售方</dt><dd>{SELLER}</dd>
+    <dt>版本</dt><dd>{VERSION}，{RELEASED} 上架（Asia/Shanghai）</dd>
+    <dt>系统</dt><dd>iPhone iOS 15+；iPad 健康读取需 iPadOS 17+；小组件需 iOS 17+；配对 Watch 需 watchOS 10+</dd>
     <dt>Bundle ID</dt><dd translate="no">{BUNDLE}</dd>
     <dt>App Store ID</dt><dd translate="no">{APP_ID}</dd>
     <dt>联系</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd>
@@ -601,8 +606,8 @@ def page_app_en() -> str:
         crumbs([("VitaGauge", url("en", "app"))]),
     ])
     return (
-        head(lang="en", title="VitaGauge: Apple Health summary, 16 metrics and offline questions",
-             description="VitaGauge is live on the App Store. Read authorized Apple Health summaries and 16 metrics, ask about steps and sleep without an API, and keep one free goal. Not a medical device.",
+        head(lang="en", title="VitaGauge: Apple Health tracker for iPhone, iPad and Apple Watch",
+             description="VitaGauge 1.2.0 is live: Apple Health summaries, 16 metrics, offline questions, goals and paired Apple Watch. Free for iPhone and iPad; iPad Health needs iPadOS 17+.",
              canonical=url("en", "app"), alt=url("app"), depth="../../", og_image="og-default.png", extra=extra)
         + header("en", "app", "../../")
         + f"""
@@ -613,11 +618,11 @@ def page_app_en() -> str:
     <h1>A clearer view of everyday health.</h1>
     <p class="lead">Start from the Apple Health records you allow. See a summary and trends, keep a small goal, and ask about your numbers in ordinary language. Local features need no account and no API key.</p>
     <div class="actions">{store_badge("en")}<a class="button secondary" href="../features/">Features and pricing</a></div>
-    <p class="live"><i aria-hidden="true"></i>1.1.0 is available, with widgets, three chat modes and one-time Pro</p>
+    <p class="live"><i aria-hidden="true"></i>{VERSION} is available with native iPad, paired Apple Watch and more widgets</p>
   </div>
   <div class="hero-art">
     <figure>
-      <img class="screen" src="../../assets/en-summary.png" width="1242" height="2688" alt="VitaGauge health summary sample showing 6,280 steps and 7.5 hours of sleep" fetchpriority="high">
+      <img class="screen" src="../../assets/en-summary.webp" width="1206" height="2622" alt="VitaGauge health summary sample showing 6,280 steps and 7.5 hours of sleep" fetchpriority="high">
       <figcaption>Actual interface · synthetic sample data, not a personal record</figcaption>
     </figure>
   </div>
@@ -635,21 +640,21 @@ def page_app_en() -> str:
   </div>
   <div class="steps">
     <article class="step">
-      <figure><img class="screen" src="../../assets/en-summary.png" width="1242" height="2688" alt="Health summary sample" loading="lazy"></figure>
+      <figure><img class="screen" src="../../assets/en-summary.webp" width="1206" height="2622" alt="Health summary sample" loading="lazy"></figure>
       <div>
         <h3>See today together</h3>
         <p>Steps, sleep, heart rate and other allowed records share one page. Missing data stays blank instead of becoming zero. Some metrics need Apple Watch or another source.</p>
       </div>
     </article>
     <article class="step">
-      <figure><img class="screen" src="../../assets/en-assistant.png" width="1290" height="2796" alt="Local assistant listing steps, sleep and active energy for a date" loading="lazy"></figure>
+      <figure><img class="screen" src="../../assets/en-assistant.webp" width="1206" height="2622" alt="Local assistant listing steps, sleep and active energy for a date" loading="lazy"></figure>
       <div>
         <h3>Ask the local assistant</h3>
         <p>Try “steps today” or “steps daily for the last 7 days”, then “what about yesterday”. It uses rules and math, not a general-purpose model, and it does not diagnose.</p>
       </div>
     </article>
     <article class="step">
-      <figure><img class="widget" src="../../assets/en-widget.png" width="338" height="158" alt="Medium Home Screen widget with steps, sleep and active energy" loading="lazy"></figure>
+      <figure><img class="widget" src="../../assets/en-widget.webp" width="1014" height="474" alt="Medium Home Screen widget with steps, sleep and active energy" loading="lazy"></figure>
       <div>
         <h3>Go further when you want</h3>
         <p>One goal is free. On iOS 17, widgets show the last sync; they are not live monitors. Pro unlocks 30-day stats, date comparisons, correlations and online AI.</p>
@@ -691,7 +696,8 @@ def page_app_en() -> str:
     </div>
   </div>
 </section>
-{pending_release_block(False)}
+{release_block(False)}
+{device_gallery(False)}
 {cite_box("en")}
 <section class="section">
   <div class="banner">
@@ -704,19 +710,19 @@ def page_app_en() -> str:
   <h2>Interface</h2>
   <p class="note">Screenshots are the production UI with synthetic sample data.</p>
   <div class="gallery">
-    <figure><img src="../../assets/en-summary.png" width="1242" height="2688" alt="Health summary sample" loading="lazy"><figcaption>Daily summary</figcaption></figure>
-    <figure><img src="../../assets/en-assistant.png" width="1290" height="2796" alt="Local record question sample" loading="lazy"><figcaption>Record questions</figcaption></figure>
-    <figure><img src="../../assets/en-trend.png" width="1242" height="2688" alt="Step trend sample" loading="lazy"><figcaption>Step trends</figcaption></figure>
-    <figure><img src="../../assets/en-goal.png" width="1242" height="2688" alt="Goals sample" loading="lazy"><figcaption>Goals</figcaption></figure>
+    <figure><img src="../../assets/en-summary.webp" width="1206" height="2622" alt="Health summary sample" loading="lazy"><figcaption>Daily summary</figcaption></figure>
+    <figure><img src="../../assets/en-assistant.webp" width="1206" height="2622" alt="Local record question sample" loading="lazy"><figcaption>Record questions</figcaption></figure>
+    <figure><img src="../../assets/en-trend.webp" width="1206" height="2622" alt="Step trend sample" loading="lazy"><figcaption>Step trends</figcaption></figure>
+    <figure><img src="../../assets/en-goal.webp" width="1206" height="2622" alt="Goals sample" loading="lazy"><figcaption>Goals</figcaption></figure>
   </div>
 </section>
 <section class="section article">
   <h2>About VitaGauge</h2>
   <dl class="facts">
     <dt>Official name</dt><dd translate="no">VitaGauge / 元气指数</dd>
-    <dt>Developer</dt><dd>智超 卫 (zhichao wei)</dd>
-    <dt>Version</dt><dd>1.1.0, live 15 September 2026</dd>
-    <dt>System</dt><dd>iOS 15 or later; widgets need iOS 17</dd>
+    <dt>App Store seller</dt><dd>{SELLER}</dd>
+    <dt>Version</dt><dd>{VERSION}, live {RELEASED} (Asia/Shanghai)</dd>
+    <dt>System</dt><dd>iPhone iOS 15+; iPad Health requires iPadOS 17+; widgets iOS 17+; paired Watch watchOS 10+</dd>
     <dt>Bundle ID</dt><dd translate="no">{BUNDLE}</dd>
     <dt>App Store ID</dt><dd translate="no">{APP_ID}</dd>
     <dt>Contact</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd>
@@ -740,11 +746,23 @@ FEATURE_ROWS = [
     ("健康摘要与 16 项指标", "Health summary and 16 metrics", True, True),
     ("7 天趋势、本地基础查询", "7-day trends and basic local queries", True, True),
     ("内置生活习惯资料、使用帮助", "Built-in lifestyle information and help", True, True),
+    ("小组件与配对 Apple Watch 摘要", "Widgets and paired Apple Watch summary", True, True),
+    ("原生 iPad 布局", "Native iPad layouts", True, True),
     ("健康目标", "Health goals", "1 个", "Multiple"),
     ("30 天趋势与统计", "30-day trends and statistics", False, True),
     ("两日比较、指标关联", "Date comparisons and correlations", False, True),
     ("自带 API Key 的在线 AI", "Online AI with your own API key", False, ("包含；模型费用另计", "Included; provider fees separate")),
 ]
+
+
+def device_gallery(zh: bool) -> str:
+    language = "zh-Hans" if zh else "en"
+    depth = "../" if zh else "../../"
+    title = "从 iPad 大屏到手腕" if zh else "From iPad to your wrist"
+    note = "1.2.0 生产界面，合成示例数据；手表显示配对 iPhone 最近同步的摘要。" if zh else "Version 1.2.0 production views with synthetic data. Watch shows the paired iPhone’s latest synced summary."
+    ipad = "iPad 原生摘要，健康读取需 iPadOS 17+" if zh else "Native iPad summary; Health needs iPadOS 17+"
+    watch = "配对 Apple Watch 摘要，需 watchOS 10+" if zh else "Paired Apple Watch summary; watchOS 10+"
+    return f'<section class="section"><h2>{title}</h2><p class="note">{note}</p><div class="gallery"><figure><img src="{depth}assets/{language}-ipad.webp" width="2064" height="2752" alt="{ipad}" loading="lazy"><figcaption>{ipad}</figcaption></figure><figure><img src="{depth}assets/{language}-watch.webp" width="410" height="502" alt="{watch}" loading="lazy"><figcaption>{watch}</figcaption></figure></div></section>'
 
 
 def feature_cell(value, zh: bool) -> str:
@@ -776,14 +794,14 @@ def page_features_zh() -> str:
     extra = json_ld([org(), software("zh"), website(), crumbs([("元气指数", url("app")), ("功能与价格", url("features"))])])
     return (
         head(lang="zh-Hans", title="功能与价格：元气指数免费版与 VitaGauge Pro 一次买断",
-             description="元气指数免费含今日摘要、7 天趋势、本地问答和 1 个目标。Pro 一次买断解锁 30 天统计、多目标和自备 Key 的在线 AI。中国区首发价 ¥38，以 Apple 购买页为准。",
+             description="元气指数免费含今日摘要、7 天趋势、本地问答和 1 个目标。Pro 一次买断解锁 30 天统计、多目标和自备 Key 的在线 AI。历史中国区参考价 ¥38，当前可用性与价格以 Apple 购买页为准。",
              canonical=url("features"), alt=url("en", "features"), depth="../", og_image="og-features.png", extra=extra)
         + header("zh", "features", "../")
         + f"""
 <header class="page-head">
   {crumb_nav([("官方网站", "../app/"), ("功能与价格", "../features/")])}
   <h1>功能清楚，费用也清楚。</h1>
-  <p class="lead">免费下载即可开始。需要更长窗口和更多目标时，再在应用内购买 Pro。1.1.0 已在 App Store 提供。</p>
+  <p class="lead">免费下载即可开始。需要更长窗口和更多目标时，再在应用内购买 Pro。{VERSION} 已在 App Store 提供。</p>
   <div class="actions">{store_badge("zh")}<a class="button secondary" href="../support/">支持中心</a></div>
 </header>
 <section class="two">
@@ -793,8 +811,8 @@ def page_features_zh() -> str:
   </article>
   <article class="card">
     <h2>VitaGauge Pro</h2>
-    <p class="price">¥38 <small>中国大陆首发买断价</small></p>
-    <p>一次性非消耗型内购，商品 ID <span translate="no">com.vitagauge.pro.lifetime</span>。实际金额以 Apple 购买页为准。买断不含模型额度。</p>
+    <p class="price">¥38 <small>历史中国区参考价</small></p>
+    <p>一次性非消耗型内购，商品 ID <span translate="no">com.vitagauge.pro.lifetime</span>。历史参考价不代表当前地区可购买，实际可用性、金额与币种以 Apple 购买页为准。买断不含模型额度。</p>
   </article>
 </section>
 <section class="section">{feature_table(True)}
@@ -803,10 +821,10 @@ def page_features_zh() -> str:
 <section class="section">
   <h2>看看实际界面</h2>
   <div class="gallery">
-    <figure><img src="../assets/zh-Hans-trend.png" width="1242" height="2688" alt="步数趋势示例" loading="lazy"><figcaption>步数趋势 · 示例数据</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-sleep.png" width="1290" height="2796" alt="睡眠趋势示例" loading="lazy"><figcaption>睡眠趋势 · 示例数据</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-local.png" width="1290" height="2796" alt="本地助理查询示例" loading="lazy"><figcaption>本地查询 · 无需 API</figcaption></figure>
-    <figure><img src="../assets/zh-Hans-goal.png" width="1242" height="2688" alt="目标示例" loading="lazy"><figcaption>健康目标 · 示例目标</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-trend.webp" width="1206" height="2622" alt="步数趋势示例" loading="lazy"><figcaption>步数趋势 · 示例数据</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-sleep.webp" width="1206" height="2622" alt="睡眠趋势示例" loading="lazy"><figcaption>睡眠趋势 · 示例数据</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-local.webp" width="1206" height="2622" alt="本地助理查询示例" loading="lazy"><figcaption>本地查询 · 无需 API</figcaption></figure>
+    <figure><img src="../assets/zh-Hans-goal.webp" width="1206" height="2622" alt="目标示例" loading="lazy"><figcaption>健康目标 · 示例目标</figcaption></figure>
   </div>
 </section>
 <section class="article">
@@ -820,7 +838,8 @@ def page_features_zh() -> str:
   <p>本地助理支持最近 1 到 30 天及明确日期。更长窗口、两日比较和关联需要 Pro。关联至少需要 7 个已结束的有效配对日，且两组都有变化；这不是因果。缺失不当成零。体温是体温类型，不是睡眠腕温。血压两项不跨时间拼成一次测量。睡眠按自然日分割。AI 回复不能替代诊疗。</p>
   <p><a href="../support/">支持中心</a>，<a href="../terms/">使用与购买说明</a></p>
 </section>
-{pending_release_block(True)}
+{release_block(True)}
+{device_gallery(True)}
 {cite_box("zh")}
 <section class="section">
   <div class="notice"><p>{FACTS["disclaimerZh"]}</p></div>
@@ -834,14 +853,14 @@ def page_features_en() -> str:
     extra = json_ld([org(), software("en"), website(), crumbs([("VitaGauge", url("en", "app")), ("Features", url("en", "features"))])])
     return (
         head(lang="en", title="Features and pricing: VitaGauge free plan and one-time Pro",
-             description="VitaGauge is free for the daily summary, 7-day trends, local questions and one goal. One-time Pro unlocks 30-day stats, multiple goals and BYOK online AI. China list price CNY 38; Apple shows your price.",
+             description="VitaGauge is free for the daily summary, 7-day trends, local questions and one goal. One-time Pro unlocks 30-day stats, multiple goals and BYOK online AI. Historical China reference CNY 38; Apple shows availability and price.",
              canonical=url("en", "features"), alt=url("features"), depth="../../", og_image="og-features.png", extra=extra)
         + header("en", "features", "../../")
         + f"""
 <header class="page-head">
   {crumb_nav([("Official site", "../../en/app/"), ("Features", "../../en/features/")])}
   <h1>Clear features. Clear cost.</h1>
-  <p class="lead">Download free. Buy Pro in the app when you want a longer window and more goals. Version 1.1.0 is live.</p>
+  <p class="lead">Download free. Buy Pro in the app when you want a longer window and more goals. Version {VERSION} is live.</p>
   <div class="actions">{store_badge("en")}<a class="button secondary" href="../support/">Support</a></div>
 </header>
 <section class="two">
@@ -851,8 +870,8 @@ def page_features_en() -> str:
   </article>
   <article class="card">
     <h2>VitaGauge Pro</h2>
-    <p class="price">CNY 38 <small>China launch list price, one time</small></p>
-    <p>Non-consumable IAP, product ID <span translate="no">com.vitagauge.pro.lifetime</span>. Apple shows the local price. The purchase does not include model credits.</p>
+    <p class="price">CNY 38 <small>historical China reference price</small></p>
+    <p>Non-consumable IAP, product ID <span translate="no">com.vitagauge.pro.lifetime</span>. The reference price does not imply local availability. Apple shows availability and the actual local price. The purchase does not include model credits.</p>
   </article>
 </section>
 <section class="section">{feature_table(False)}
@@ -861,10 +880,10 @@ def page_features_en() -> str:
 <section class="section">
   <h2>The shipping interface</h2>
   <div class="gallery">
-    <figure><img src="../../assets/en-trend.png" width="1242" height="2688" alt="Step trend sample" loading="lazy"><figcaption>Step trends · sample data</figcaption></figure>
-    <figure><img src="../../assets/en-sleep.png" width="1290" height="2796" alt="Sleep trend sample" loading="lazy"><figcaption>Sleep trends · sample data</figcaption></figure>
-    <figure><img src="../../assets/en-local.png" width="1290" height="2796" alt="Local assistant sample" loading="lazy"><figcaption>Local query · no API</figcaption></figure>
-    <figure><img src="../../assets/en-goal.png" width="1242" height="2688" alt="Goals sample" loading="lazy"><figcaption>Goals · sample target</figcaption></figure>
+    <figure><img src="../../assets/en-trend.webp" width="1206" height="2622" alt="Step trend sample" loading="lazy"><figcaption>Step trends · sample data</figcaption></figure>
+    <figure><img src="../../assets/en-sleep.webp" width="1206" height="2622" alt="Sleep trend sample" loading="lazy"><figcaption>Sleep trends · sample data</figcaption></figure>
+    <figure><img src="../../assets/en-local.webp" width="1206" height="2622" alt="Local assistant sample" loading="lazy"><figcaption>Local query · no API</figcaption></figure>
+    <figure><img src="../../assets/en-goal.webp" width="1206" height="2622" alt="Goals sample" loading="lazy"><figcaption>Goals · sample target</figcaption></figure>
   </div>
 </section>
 <section class="article">
@@ -878,7 +897,8 @@ def page_features_en() -> str:
   <p>The offline assistant supports recent 1 to 30 day windows and explicit dates. Longer windows, date comparisons and correlations need Pro. Correlation needs at least 7 finished paired days with variation in both series; it is not causation. Missing data is not zero. Body temperature is the body-temperature type, not sleep wrist temperature. The two blood-pressure readings are not joined across time into one measurement. Sleep is split by calendar day. AI replies do not replace care.</p>
   <p><a href="../support/">Support</a>, <a href="../terms/">use and purchases</a></p>
 </section>
-{pending_release_block(False)}
+{release_block(False)}
+{device_gallery(False)}
 {cite_box("en")}
 <section class="section">
   <div class="notice"><p>{FACTS["disclaimerEn"]}</p></div>
@@ -889,13 +909,14 @@ def page_features_en() -> str:
 
 
 FAQ_ZH = [
-    ("元气指数现在上架了吗？", "是。1.1.0 已在 App Store 提供，仅 iOS。1.2.0 的 iPad 与配对 Apple Watch 功能正在准备，尚未发布。商店页：https://apps.apple.com/app/id6762522305"),
-    ("1.2.0 的 Apple Watch 怎样使用？", FACTS["pendingRelease"]["supportZh"]),
+    ("元气指数现在上架了吗？", f"是。{VERSION} 已上架，支持 iPhone、原生 iPad 和配对 Apple Watch。下载及内购以所在地区 App Store 显示为准。商店页：{STORE}"),
+    ("1.2.0 的 Apple Watch 怎样使用？", FACTS["currentRelease"]["supportZh"]),
+    ("iPad 能读取 Apple 健康吗？", "可以，需 iPadOS 17+ 并在该 iPad 授权；应用安装下限 iPadOS 15 不等于旧系统可读取健康。iPad 不与 Apple Watch 配对。"),
     ("有 Android 或 Google Play 版本吗？", "没有。目前只发布 iOS。"),
     ("第一次打开要做什么？", "阅读健康权限说明后点「继续」，在系统弹窗选择允许读取的类型。稍后可到「设置 → 健康数据与权限」。应用只读，不写入 Apple 健康。"),
     ("为什么有的指标是空的？", "先确认 Apple 健康里该日期已有记录，再检查读取权限并刷新。空白不是 0，也不能单凭空白判断你拒绝了权限。"),
     ("没有 API Key 能用什么？", "摘要、7 天趋势、基础本地查询、内置生活习惯资料和 1 个目标。Pro 的本机统计也不需要 API。"),
-    ("Pro 是订阅吗？", "不是。Pro 是一次性买断，中国区首发价 ¥38，以 Apple 购买页为准。无自动扣费，未开启家庭共享。在线模型费用由你的服务商另计。"),
+    ("Pro 是订阅吗？", "不是。Pro 是一次性买断，历史中国区参考价 ¥38，当前可用性与价格以 Apple 购买页为准。无自动扣费，未开启家庭共享。在线模型费用由你的服务商另计。"),
     ("换手机怎么恢复？", "用原购买 Apple 账户，到「设置 → 元气指数 Pro → 恢复购买」。恢复不会带回聊天、目标或 API Key，这些文件不随本应用备份。"),
     ("已付款但没解锁？", "确认 Apple 交易已完成而不是待批准，联网后点恢复购买。退款请到 reportaproblem.apple.com。"),
     ("怎样连接在线 AI？", "「设置 → 连接在线 AI」选择服务商，粘贴自己的 Key 并验证保存。验证只发送固定测试文字。在线对话需要 Pro，首次向该接收方发送还要单独同意。"),
@@ -908,13 +929,14 @@ FAQ_ZH = [
 ]
 
 FAQ_EN = [
-    ("Is VitaGauge on the App Store?", "Yes. Version 1.1.0 is live, iOS only. Native iPad and paired Apple Watch support are planned for 1.2.0, which is not released. https://apps.apple.com/app/id6762522305"),
-    ("How will Apple Watch work in 1.2.0?", FACTS["pendingRelease"]["supportEn"]),
+    ("Is VitaGauge on the App Store?", f"Yes. Version {VERSION} is live for iPhone, native iPad and paired Apple Watch. Download and purchase availability depend on your local App Store. {STORE}"),
+    ("How do I use Apple Watch in 1.2.0?", FACTS["currentRelease"]["supportEn"]),
+    ("Can iPad read Apple Health?", "Yes, on iPadOS 17+ after authorization on that iPad. The iPadOS 15 app installation minimum does not enable Health on older systems. iPad does not pair with Apple Watch."),
     ("Is there an Android app?", "No. There is no Google Play listing."),
     ("What should I do on first launch?", "Read the Health explanation, tap Continue, and choose types in the system sheet. Later use Settings → Health data & permissions. The app reads records and does not write to HealthKit."),
     ("Why are some metrics blank?", "Confirm Apple Health has records for that date, review read permissions, then refresh. A blank is not zero and does not by itself prove denied access."),
     ("What works without an API key?", "Summary, 7-day trends, basic local queries, built-in lifestyle information and one goal. Pro local statistics also work offline."),
-    ("Is Pro a subscription?", "No. It is a one-time purchase. The China list price is CNY 38; Apple shows your price. No recurring charge and no Family Sharing. Your model provider may bill separately."),
+    ("Is Pro a subscription?", "No. It is a one-time purchase. The historical China reference price is CNY 38; Apple shows current availability and price. No recurring charge and no Family Sharing. Your model provider may bill separately."),
     ("How do I restore on a new iPhone?", "Use the original Apple Account and open Settings → VitaGauge Pro → Restore purchases. Restore does not bring back chats, goals or API keys."),
     ("I paid but Pro is locked.", "Check that Apple finished the transaction, then restore on a network. Request refunds at reportaproblem.apple.com."),
     ("How do I connect online AI?", "Settings → Connect online AI. Paste your own key, verify and save. Verification sends fixed test text. Online chat needs Pro and separate consent for that recipient."),
@@ -940,7 +962,7 @@ def page_support_zh() -> str:
     ])
     return (
         head(lang="zh-Hans", title="支持中心：元气指数入门、权限、恢复购买与数据删除",
-             description="元气指数支持：首次授权、指标空白、Pro 恢复与退款、三种对话模式、语音、小组件、权限、导出与删除。联系 weizhichao1027@gmail.com。",
+             description="元气指数 1.2.0 支持：iPhone / iPad 安装、Apple Watch 同步、小组件刷新、健康权限、Pro 恢复购买与数据删除。联系 weizhichao1027@gmail.com。",
              canonical=url("support"), alt=url("en", "support"), depth="../", og_image="og-support.png", extra=extra)
         + header("zh", "support", "../")
         + f"""
@@ -951,13 +973,14 @@ def page_support_zh() -> str:
 </header>
 <div class="contact">
   <h2>联系开发者</h2>
-  <p>请写明 App 版本（当前商店版本 1.1.0）、iOS 版本、复现步骤和错误提示。截图请遮盖私人信息。</p>
+  <p>请写明 App 版本（当前商店版本 {VERSION}）、设备型号、iOS / iPadOS / watchOS 版本、复现步骤和错误提示。手表问题请附配对 iPhone 版本和最近同步时间。截图请遮盖私人信息。</p>
   <p><a class="button" href="mailto:{EMAIL}?subject=%E5%85%83%E6%B0%94%E6%8C%87%E6%95%B0%20%E6%94%AF%E6%8C%81">发送支持邮件</a></p>
   <p class="note">{EMAIL}</p>
 </div>
 <section class="section">
   {topic_nav([
       ("#start", "开始使用", "授权健康数据并查看摘要"),
+      ("#devices", "设备与系统", "iPad 健康读取与配对 Watch"),
       ("#account", "账户与恢复", "没有注册；恢复的是 Pro 权益"),
       ("#howto", "功能说明", "助理、目标、小组件、语音"),
       ("#permissions", "权限", "健康、照片、麦克风"),
@@ -973,6 +996,7 @@ def page_support_zh() -> str:
     <p>从 <a href="{STORE_ZH}" rel="noopener">App Store</a> 安装元气指数。首次启动会说明下一步是系统健康权限，主按钮是「继续」。点继续后出现 iOS 授权表，选择允许读取的类型。设备不支持 HealthKit 时不会请求权限。</p>
     <p>授权完成不等于每项都有数。打开摘要，下拉刷新。无数据时，应用会区分「没有记录」和「无法读取」。可到「设置 → 健康数据与权限」再打开系统设置。</p>
   </section>
+  <section id="devices"><h2>设备与系统要求</h2><p>iPhone 主应用需 iOS 15+。iPad 原生布局可安装于 iPadOS 15+，但读取 Apple 健康需 iPadOS 17+，并在该 iPad 上授权。小组件需 iOS / iPadOS 17+；配对 Apple Watch 需 watchOS 10+ 及兼容 iPhone。健康指标是否可用还取决于设备、数据来源与授权。</p><p>iPhone 与 iPad 的聊天、目标、头像及 Key 不会由开发者服务器跨设备同步。Pro 可用原购买 Apple 账户恢复，恢复权益不会恢复本地资料。</p></section>
   <section id="account">
     <h2>账户与恢复购买</h2>
     <p>元气指数不提供开发者账户，也没有登录。免费功能只存在这台设备的应用数据里。</p>
@@ -987,9 +1011,9 @@ def page_support_zh() -> str:
     <h3>目标</h3>
     <p>选指标、设目标值、查看最近 30 天进度，可暂停或删除。免费 1 个，多个需要 Pro。</p>
     <h3>小组件</h3>
-    <p>iOS 17 可添加桌面小号/中号、锁屏圆形/矩形。每个实例可选步数、睡眠、活动能量、步行距离、体能训练或自动关注进行中目标，并可隐藏数值。打开应用同步后更新，显示同步时间。超过约两小时会提示需要更新。午夜后不再显示昨天的数据。不是实时监测，也不调用 AI。</p>
-    <h3>配对 Apple Watch（计划随 1.2.0 提供）</h3>
-    <p>{FACTS["pendingRelease"]["supportZh"]}</p>
+    <p>iOS / iPadOS 17+ 可添加主屏幕小号、中号、大号，iPad 另有超大尺寸；兼容设备支持锁屏圆形、矩形和行内样式。每个实例可选步数、睡眠、活动能量、步行距离、体能训练或自动关注进行中目标，并可隐藏数值。打开应用同步后更新，显示同步时间。超过约两小时会提示需要更新。午夜后不再显示昨天的数据。不是实时监测，也不调用 AI。</p>
+    <h3 id="watch">配对 Apple Watch（1.2.0 已提供）</h3>
+    <p>{FACTS["currentRelease"]["supportZh"]}</p>
     <h3>界面语言</h3>
     <p>「设置 → 应用语言」。支持 13 种界面语言。语音只在设备端识别可用时提供。</p>
     <h3>语音</h3>
@@ -1004,7 +1028,7 @@ def page_support_zh() -> str:
   </section>
   <section id="billing">
     <h2>购买、恢复与退款</h2>
-    <p>Pro 是非消耗型一次买断，中国区首发价 ¥38，以购买页为准。待批准不是已完成。开发者收不到银行卡号。</p>
+    <p>Pro 是非消耗型一次买断，历史中国区参考价 ¥38，当前可用性及价格以购买页为准。待批准不是已完成。开发者收不到银行卡号。</p>
     <p>退款由 Apple 处理：<a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>。许可遵循 <a href="{FACTS['legal']['standardEula']}">Apple 标准 EULA</a>。详见<a href="../terms/">使用说明</a>。</p>
   </section>
   <section id="trouble">
@@ -1018,7 +1042,7 @@ def page_support_zh() -> str:
   <section id="data">
     <h2>导出与删除</h2>
     <p>应用没有独立的健康数据导出。原始记录请用 Apple 健康导出。</p>
-    <p>本机：清空对话、删除目标、编辑或移除头像、清除 AI 配置（含 Keychain 密钥）。卸载前请先清除 AI 配置。卸载会删除沙盒文件，但不能保证密钥一定被删掉；如需立即失效，请在服务商处撤销 Key。</p>
+    <p>手表摘要分别保存在手机与配对手表的受保护本地存储。撤回健康权限或卸载手机 App 不保证立即清除断连手表的缓存；请同时管理手表端 App，已同步快照不会被清空聊天操作删除。</p><p>本机：清空对话、删除目标、编辑或移除头像、清除 AI 配置（含 Keychain 密钥）。卸载前请先清除 AI 配置。卸载会删除沙盒文件，但不能保证密钥一定被删掉；如需立即失效，请在服务商处撤销 Key。</p>
     <p>服务商已收到的内容，请向该服务商申请访问或删除。开发者邮箱里的支持信件，可写信要求查阅、更正或删除。</p>
     <p>完整条款见<a href="../">隐私政策</a>。</p>
   </section>
@@ -1027,7 +1051,7 @@ def page_support_zh() -> str:
     {faq_html(FAQ_ZH)}
   </section>
 </article>
-{pending_release_block(True)}
+{release_block(True)}
 {cite_box("zh")}
 """
         + footer("zh", "../")
@@ -1043,7 +1067,7 @@ def page_support_en() -> str:
     ])
     return (
         head(lang="en", title="Support: VitaGauge setup, permissions, restore and deletion",
-             description="VitaGauge help: first Health permission, blank metrics, Pro restore and refunds, chat modes, voice, widgets, export and deletion. Email weizhichao1027@gmail.com.",
+             description="VitaGauge 1.2.0 support: iPhone and iPad setup, Apple Watch sync, widgets, Health permissions, Pro purchase restore and data deletion. Email weizhichao1027@gmail.com.",
              canonical=url("en", "support"), alt=url("support"), depth="../../", og_image="og-support.png", extra=extra)
         + header("en", "support", "../../")
         + f"""
@@ -1054,13 +1078,14 @@ def page_support_en() -> str:
 </header>
 <div class="contact">
   <h2>Contact the developer</h2>
-  <p>Include app version (store version 1.1.0), iOS version, steps and the error text. Redact private information in screenshots.</p>
+  <p>Include app version (store version {VERSION}), device model, iOS / iPadOS / watchOS version, steps and the error text. For Watch issues, include the paired iPhone version and latest sync time. Redact private information in screenshots.</p>
   <p><a class="button" href="mailto:{EMAIL}?subject=VitaGauge%20Support">Email support</a></p>
   <p class="note">{EMAIL}</p>
 </div>
 <section class="section">
   {topic_nav([
       ("#start", "Getting started", "Allow Health and open the summary"),
+      ("#devices", "Devices", "iPad Health and paired Watch"),
       ("#account", "Account and restore", "No sign-in; restore Pro only"),
       ("#howto", "How-tos", "Assistant, goals, widgets, voice"),
       ("#permissions", "Permissions", "Health, photos, microphone"),
@@ -1076,6 +1101,7 @@ def page_support_en() -> str:
     <p>Install from the <a href="{STORE_EN}" rel="noopener">App Store</a>. The first screen explains that the next step is the system Health sheet. The main button is Continue. Then choose read types. If HealthKit is unavailable, the app does not request permission.</p>
     <p>Permission is not the same as having numbers. Open the summary and pull to refresh. Empty states distinguish missing records from read failures. Use Settings → Health data & permissions to reopen system settings.</p>
   </section>
+  <section id="devices"><h2>Devices and system requirements</h2><p>The iPhone app needs iOS 15+. Native iPad layouts install on iPadOS 15+, but Apple Health access needs iPadOS 17+ and authorization on that iPad. Widgets need iOS / iPadOS 17+. Apple Watch needs watchOS 10+ and a compatible paired iPhone. Available metrics also depend on the device, data source and permissions.</p><p>There is no developer server that syncs chats, goals, avatars or keys between iPhone and iPad. Restore Pro with the original Apple Account; restoring access does not restore local data.</p></section>
   <section id="account">
     <h2>Account and restore</h2>
     <p>VitaGauge has no developer account and no login. Free data lives in this install.</p>
@@ -1090,9 +1116,9 @@ def page_support_en() -> str:
     <h3>Goals</h3>
     <p>Pick a metric and target, review about 30 days of progress, pause or delete. One goal is free.</p>
     <h3>Widgets</h3>
-    <p>On iOS 17, add small or medium Home Screen widgets and circular or rectangular Lock Screen widgets. Each instance can show steps, sleep, active energy, walking distance, workouts, or an in-progress goal, and can hide values. Open the app to sync. After about two hours they ask for an update. After midnight they hide yesterday. They are not live monitors and do not call AI.</p>
-    <h3>Paired Apple Watch (planned for 1.2.0)</h3>
-    <p>{FACTS["pendingRelease"]["supportEn"]}</p>
+    <p>On iOS / iPadOS 17+, add small, medium or large Home Screen widgets, plus extra large on iPad. Compatible devices also offer circular, rectangular and inline Lock Screen widgets. Each instance can show steps, sleep, active energy, walking distance, workouts, or an in-progress goal, and can hide values. Open the app to sync. After about two hours they ask for an update. After midnight they hide yesterday. They are not live monitors and do not call AI.</p>
+    <h3 id="watch">Paired Apple Watch (available in 1.2.0)</h3>
+    <p>{FACTS["currentRelease"]["supportEn"]}</p>
     <h3>Language</h3>
     <p>Settings → App language. The interface has 13 locales. Voice input needs on-device recognition for that language.</p>
     <h3>Voice</h3>
@@ -1107,7 +1133,7 @@ def page_support_en() -> str:
   </section>
   <section id="billing">
     <h2>Billing and refunds</h2>
-    <p>Pro is a non-consumable one-time purchase. China list price CNY 38; Apple shows the local price. Pending approval is not a completed buy. We do not receive card numbers.</p>
+    <p>Pro is a non-consumable one-time purchase. Historical China reference price CNY 38; Apple shows current availability and price. Pending approval is not a completed buy. We do not receive card numbers.</p>
     <p>Refunds: <a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>. License: <a href="{FACTS['legal']['standardEula']}">Apple standard EULA</a>. See <a href="../terms/">use and purchases</a>.</p>
   </section>
   <section id="trouble">
@@ -1130,7 +1156,7 @@ def page_support_en() -> str:
     {faq_html(FAQ_EN)}
   </section>
 </article>
-{pending_release_block(False)}
+{release_block(False)}
 {cite_box("en")}
 """
         + footer("en", "../../")
@@ -1151,6 +1177,7 @@ def page_privacy_zh() -> str:
         crumbs([("元气指数", url("app")), ("隐私政策", url())]),
         {
             "@type": "WebPage",
+            "@id": url() + "#webpage",
             "name": "隐私政策",
             "url": url(),
             "dateModified": REVIEWED,
@@ -1162,7 +1189,7 @@ def page_privacy_zh() -> str:
     ])
     return (
         head(lang="zh-Hans", title="隐私政策：元气指数 VitaGauge 如何处理健康与 AI 数据",
-             description="元气指数隐私政策：控制者智超 卫，HealthKit 只读、可选照片头像、端侧语音、自备 Key 的第三方 AI、无分析 SDK、内购由 Apple 处理。生效 2026-09-16，复核 2026-10-30，补充待发布 1.2.0 的配对手表同步。",
+             description="元气指数隐私政策：控制者智超 卫，HealthKit 只读、可选照片头像、端侧语音、自备 Key 的第三方 AI、无分析 SDK、内购由 Apple 处理。生效 2026-09-16，复核 2026-10-31，适用于已上架 1.2.0 的配对手表同步。",
              canonical=url(), alt=url("en"), depth="", og_image="og-privacy.png", extra=extra)
         + header("zh", "privacy", "")
         + f"""
@@ -1204,7 +1231,7 @@ def page_privacy_zh() -> str:
 <article class="policy-card article" id="policy">
   <section id="s1">
     <h2>控制者与范围</h2>
-    <p>本政策适用于 iOS 应用「元气指数」（英文 VitaGauge，Bundle ID <span translate="no">{BUNDLE}</span>，App Store ID {APP_ID}）以及本 GitHub Pages 网站。个人信息控制者为开发者<strong>智超 卫</strong>（对外也写作 zhichao wei）。联系邮箱 {EMAIL}。</p>
+    <p>本政策适用于 iOS 应用「元气指数」（英文 VitaGauge，Bundle ID <span translate="no">{BUNDLE}</span>，App Store ID {APP_ID}）以及本 GitHub Pages 网站。个人信息控制者为开发者<strong>智超 卫</strong>（对外也写作 zhichao wei）。联系邮箱 {EMAIL}。App Store 当前销售方为 {SELLER}。</p>
     <p>应用不要求注册开发者账户，也不运营接收健康问答的 AI 中转服务器。Apple 作为 App Store 与 StoreKit 的独立控制者处理下载和内购。</p>
   </section>
   <section id="s2">
@@ -1222,9 +1249,9 @@ def page_privacy_zh() -> str:
     <h2>HealthKit</h2>
     <p>只有你通过系统授权后，应用才读取：{METRICS_ZH}。应用只读，不向 HealthKit 写入或修改样本。原始记录仍由 Apple 健康管理。体温是体温类型，不是睡眠腕温。收缩压与舒张压不跨时间拼成一次测量。睡眠合并重叠区间后按自然日及夏令时分割。</p>
     <p>首次启动先说明用途，主按钮为「继续」，然后进入系统权限表；不能用「稍后」跳过该系统表。之后可在 Apple 健康或「设置 → 健康数据与权限」更改。系统授权完成不代表每一类都有可见数据。</p>
-    <p>iOS 17 及以上的小组件通过 App Group 读取本机摘要与目标快照，不调用 AI，也不发给开发者。快照使用文件保护并排除备份。打开应用同步后更新；小组件显示同步时间，可隐藏数值，不是实时监测。计划随 1.2.0 增加的小组件尺寸与锁屏样式沿用此数据边界；系统安排后台更新，刷新可能延迟。</p>
-    <h3>配对 Apple Watch（计划随 1.2.0 提供）</h3>
-    <p>{FACTS["pendingRelease"]["watchSync"]["disclosureZh"]}</p>
+    <p>iOS 17 及以上的小组件通过 App Group 读取本机摘要与目标快照，不调用 AI，也不发给开发者。快照使用文件保护并排除备份。打开应用同步后更新；小组件显示同步时间，可隐藏数值，不是实时监测。1.2.0 增加的小组件尺寸与锁屏样式沿用此数据边界；系统安排后台更新，刷新可能延迟。</p>
+    <h3 id="watch">配对 Apple Watch（1.2.0 已提供）</h3>
+    <p>{FACTS["currentRelease"]["watchSync"]["disclosureZh"]}</p>
   </section>
   <section id="s4">
     <h2>何时发到第三方 AI</h2>
@@ -1243,13 +1270,13 @@ def page_privacy_zh() -> str:
   </section>
   <section id="s6">
     <h2>本地存储、保留与保护</h2>
-    <p>应用不把原始健康样本批量复制到独立健康库。目标、刷新日志、资料、头像、AI 元数据和聊天存在应用沙盒，使用 iOS 文件保护并排除系统备份。</p>
+    <p>手机与配对手表分别保存受保护、排除备份的本地摘要快照。撤回健康权限或卸载手机 App 不保证立即清除断连手表的缓存，请同时管理手表端 App；清空聊天不会删除已同步手表快照。</p><p>应用不把原始健康样本批量复制到独立健康库。目标、刷新日志、资料、头像、AI 元数据和聊天存在应用沙盒，使用 iOS 文件保护并排除系统备份。</p>
     <p>会话最多约 100 条、正文合计约 200,000 个 UTF-8 字节、单条约 24,000 字符。模型推理不持久化。API Key 存在解锁后可用、仅当前设备的 Keychain，与地址和协议绑定，不同步 iCloud Keychain，不写入安装包或日志。</p>
     <p>进入后台时会遮盖任务切换器中的敏感界面，并取消进行中的 AI、语音和健康查询。这些措施降低风险，但不能保证绝对安全。</p>
   </section>
   <section id="s7">
     <h2>选择、权利、导出与删除</h2>
-    <p>你可以在系统设置管理健康、照片、麦克风和语音权限；在应用内撤回第三方 AI 同意、清除 AI 配置、清空聊天、删除目标或改资料。</p>
+    <p>你可以在系统设置管理健康、麦克风和语音权限，通过系统照片选择器选择或更换头像；在应用内撤回第三方 AI 同意、清除 AI 配置、清空聊天、删除目标或改资料。</p>
     <p>应用没有独立健康导出。原始健康数据请用 Apple 健康导出。针对开发者持有的支持邮件，你可以请求查阅、更正或删除。针对服务商已接收的数据，请向该服务商行使权利。</p>
     <p>卸载会删除沙盒文件。<strong>卸载前请先「清除 AI 配置」</strong>；不要把卸载当成密钥一定消失的保证。若密钥须立即失效，请在服务商处撤销或轮换。</p>
   </section>
@@ -1264,14 +1291,14 @@ def page_privacy_zh() -> str:
   </section>
   <section id="s10">
     <h2>本网站与政策更新</h2>
-    <p>本站由 GitHub Pages 托管，无表单、Cookie、分析脚本或外部字体。公开的机器可读事实见 <a href="llms.txt">llms.txt</a> 与 <a href="product-facts.json">product-facts.json</a>。重大变更会在本页更新日期，并通过应用或 App Store 更新说明告知。需要同意的新处理会另行征求同意。应用内离线政策摘要会随下一版构建同步本页复核日期。</p>
+    <p>本站由 GitHub Pages 托管，无表单、Cookie、分析脚本或外部字体。公开的机器可读事实见 <a href="llms.txt">llms.txt</a> 与 <a href="product-facts.json">product-facts.json</a>。重大变更会在本页更新日期，并通过应用或 App Store 更新说明告知。需要同意的新处理会另行征求同意。已上架 1.2.0 的应用内离线摘要日期为 2026-10-30；网站复核日期不会自动修改已安装应用，完整最新说明以本页为准。</p>
   </section>
   <section id="s11">
     <h2>联系我们</h2>
     <p>隐私、支持或数据请求：<a href="mailto:{EMAIL}">{EMAIL}</a>。请写明「元气指数 / VitaGauge」，只提供处理所需信息。</p>
   </section>
 </article>
-{pending_release_block(True)}
+{release_block(True)}
 {cite_box("zh")}
 """
         + footer("zh", "")
@@ -1286,7 +1313,7 @@ def page_privacy_en() -> str:
     ])
     return (
         head(lang="en", title="Privacy Policy: how VitaGauge handles health and AI data",
-             description="VitaGauge privacy policy: controller 智超 卫 (zhichao wei). HealthKit read-only, optional photo avatar, on-device speech, BYOK third-party AI, no analytics SDK, Apple IAP. Effective 16 September 2026, reviewed 30 October 2026, with paired-watch disclosure for planned 1.2.0.",
+             description="VitaGauge privacy policy: controller 智超 卫 (zhichao wei). HealthKit read-only, optional photo avatar, on-device speech, BYOK third-party AI, no analytics SDK, Apple IAP. Effective 16 September 2026, reviewed 31 October 2026, including paired-watch sync in released 1.2.0.",
              canonical=url("en"), alt=url(), depth="../", og_image="og-privacy.png", extra=extra)
         + header("en", "privacy", "../")
         + f"""
@@ -1328,7 +1355,7 @@ def page_privacy_en() -> str:
 <article class="policy-card article" id="policy">
   <section id="s1">
     <h2>Controller and scope</h2>
-    <p>This policy covers the iOS app VitaGauge (元气指数, bundle ID <span translate="no">{BUNDLE}</span>, App Store ID {APP_ID}) and this GitHub Pages site. The controller is <strong>智超 卫</strong> (zhichao wei), email {EMAIL}.</p>
+    <p>This policy covers the iOS app VitaGauge (元气指数, bundle ID <span translate="no">{BUNDLE}</span>, App Store ID {APP_ID}) and this GitHub Pages site. The controller is <strong>智超 卫</strong> (zhichao wei), email {EMAIL}. The current App Store seller is {SELLER}.</p>
     <p>The app has no developer account and no server that relays health chats. Apple is an independent controller for App Store distribution and StoreKit purchases.</p>
   </section>
   <section id="s2">
@@ -1346,9 +1373,9 @@ def page_privacy_en() -> str:
     <h2>HealthKit</h2>
     <p>After permission the app may read {METRICS_EN}. It does not write HealthKit samples. Originals stay in Apple Health. Body temperature is the body-temperature type, not sleep wrist temperature. Systolic and diastolic readings are not joined across time into one measurement. Sleep intervals are merged, then split by calendar day and daylight-saving boundaries.</p>
     <p>First launch explains the next step, the main button is Continue, then the system sheet appears. There is no Later control that skips that sheet. You can change access in Apple Health or Settings → Health data & permissions.</p>
-    <p>Widgets on iOS 17+ read a local App Group snapshot. They do not call AI or send data to the developer. The snapshot uses file protection and is excluded from backups. Open the app to sync. Widgets are not real-time monitors. Additional sizes and Lock Screen styles planned for 1.2.0 use the same data boundary. Background updates are scheduled by the system and may be delayed.</p>
-    <h3>Paired Apple Watch (planned for 1.2.0)</h3>
-    <p>{FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}</p>
+    <p>Widgets on iOS / iPadOS 17+ read a local App Group snapshot. They do not call AI or send data to the developer. The snapshot uses file protection and is excluded from backups. Open the app to sync. Widgets are not real-time monitors. Additional sizes and Lock Screen styles available in 1.2.0 use the same data boundary. Background updates are scheduled by the system and may be delayed.</p>
+    <h3 id="watch">Paired Apple Watch (available in 1.2.0)</h3>
+    <p>{FACTS["currentRelease"]["watchSync"]["disclosureEn"]}</p>
   </section>
   <section id="s4">
     <h2>When data goes to third-party AI</h2>
@@ -1367,13 +1394,13 @@ def page_privacy_en() -> str:
   </section>
   <section id="s6">
     <h2>Storage and retention</h2>
-    <p>The app does not bulk-copy raw samples into a second health database. Goals, profile, avatar, AI metadata and chats use file protection and are excluded from backups.</p>
+    <p>The phone and paired watch each keep a protected local summary snapshot, excluded from backups. Revoking Health access or uninstalling the phone app does not guarantee immediate removal of a disconnected watch’s cache. Manage the watch app separately. Clearing chat does not clear synced watch snapshots.</p><p>The app does not bulk-copy raw samples into a second health database. Goals, sync logs, profile, avatar, AI metadata and chats use file protection and are excluded from backups.</p>
     <p>Chat is bounded (about 100 messages, 200,000 UTF-8 bytes, 24,000 characters each). Keys use device-only Keychain and are not synced with iCloud Keychain.</p>
     <p>Backgrounding covers the app switcher and cancels in-flight AI, voice and health queries. No storage or transfer is absolutely secure.</p>
   </section>
   <section id="s7">
     <h2>Rights and deletion</h2>
-    <p>You can manage Health, Photos, microphone and speech in iOS settings; revoke AI consent, clear configuration, clear chat, delete goals or edit the profile in the app.</p>
+    <p>You can manage Health, microphone and speech in system settings and choose or replace an avatar through the system photo picker; revoke AI consent, clear configuration, clear chat, delete goals or edit the profile in the app.</p>
     <p>There is no in-app export of original health samples. Use Apple Health. For support mail we hold, you may request access, correction or deletion. For data a provider already received, contact that provider.</p>
     <p>Uninstalling removes sandbox files. <strong>Clear AI configuration before uninstalling</strong>. Uninstall is not a guarantee that the Keychain item is gone. Revoke or rotate the key with the provider if it must become invalid immediately.</p>
   </section>
@@ -1388,14 +1415,14 @@ def page_privacy_en() -> str:
   </section>
   <section id="s10">
     <h2>This website and changes</h2>
-    <p>The site is hosted on GitHub Pages, with no forms, cookies, analytics scripts or external fonts. Machine-readable facts: <a href="../llms.txt">llms.txt</a> and <a href="../product-facts.json">product-facts.json</a>. Material updates will change the date on this page and may appear in the app or App Store notes. New processing that needs consent will ask for it. The in-app offline summary date will follow this review date in the next app build.</p>
+    <p>The site is hosted on GitHub Pages, with no forms, cookies, analytics scripts or external fonts. Machine-readable facts: <a href="../llms.txt">llms.txt</a> and <a href="../product-facts.json">product-facts.json</a>. Material updates will change the date on this page and may appear in the app or App Store notes. New processing that needs consent will ask for it. The offline summary in released 1.2.0 is dated 30 October 2026. Updating this website does not change an installed app; this page contains the latest full explanation.</p>
   </section>
   <section id="s11">
     <h2>Contact</h2>
     <p>Privacy, support or data requests: <a href="mailto:{EMAIL}">{EMAIL}</a>. Write “VitaGauge / 元气指数” and send only what is needed.</p>
   </section>
 </article>
-{pending_release_block(False)}
+{release_block(False)}
 {cite_box("en")}
 """
         + footer("en", "../")
@@ -1406,7 +1433,7 @@ def page_terms_zh() -> str:
     extra = json_ld([org(), website(), crumbs([("元气指数", url("app")), ("使用说明", url("terms"))])])
     return (
         head(lang="zh-Hans", title="使用与购买说明 · 元气指数",
-             description="元气指数由智超 卫开发。Pro 为一次性非消耗型内购，无自动续订，未开家庭共享。退款由 Apple 处理。应用不是医疗器械。",
+             description="元气指数 App Store 销售方为 Shanghai Qishan Cultural Communication Co., Ltd.。Pro 为一次性非消耗型内购，无自动续订，未开家庭共享。退款由 Apple 处理。应用不是医疗器械。",
              canonical=url("terms"), alt=url("en", "terms"), depth="../", extra=extra)
         + header("zh", "terms", "../")
         + f"""
@@ -1418,11 +1445,11 @@ def page_terms_zh() -> str:
 <article class="article">
   <section>
     <h2>产品与开发者</h2>
-    <p>元气指数由智超 卫开发，面向 iPhone（iOS 15+），用于整理已授权的 Apple 健康记录、管理个人目标和查看一般资料。当前商店版本 1.1.0 已上架，含 Pro 与小组件。</p>
+    <p>元气指数的 App Store 销售方为 {SELLER}，面向 iPhone（iOS 15+）及原生 iPad（读取健康需 iPadOS 17+），用于整理已授权的 Apple 健康记录、管理个人目标和查看一般资料。当前商店版本 {VERSION} 已上架，含 Pro 与小组件。</p>
   </section>
   <section>
     <h2>购买与恢复</h2>
-    <p>Pro 是一次性非消耗型内购，商品 <span translate="no">com.vitagauge.pro.lifetime</span>，无自动续订，未开启家庭共享。中国区首发价 ¥38，以 Apple 购买页为准。买断不含 API Key 或模型费用。用原 Apple 账户恢复。待批准不是已完成购买。退款：<a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>。</p>
+    <p>Pro 是一次性非消耗型内购，商品 <span translate="no">com.vitagauge.pro.lifetime</span>，无自动续订，未开启家庭共享。历史中国区参考价 ¥38，当前可用性与价格以 Apple 购买页为准。买断不含 API Key 或模型费用。用原 Apple 账户恢复。待批准不是已完成购买。退款：<a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>。</p>
   </section>
   <section>
     <h2>你选择的在线服务</h2>
@@ -1450,7 +1477,7 @@ def page_terms_en() -> str:
     extra = json_ld([org(), website(), crumbs([("VitaGauge", url("en", "app")), ("Use and purchases", url("en", "terms"))])])
     return (
         head(lang="en", title="Use and purchases · VitaGauge",
-             description="VitaGauge is developed by 智超 卫. Pro is a one-time non-consumable IAP with no renewal and no Family Sharing. Apple handles refunds. Not a medical device.",
+             description="VitaGauge is distributed by Shanghai Qishan Cultural Communication Co., Ltd. on the App Store. Pro is a one-time non-consumable IAP with no renewal and no Family Sharing. Apple handles refunds. Not a medical device.",
              canonical=url("en", "terms"), alt=url("terms"), depth="../../", extra=extra)
         + header("en", "terms", "../../")
         + f"""
@@ -1462,11 +1489,11 @@ def page_terms_en() -> str:
 <article class="article">
   <section>
     <h2>About this app</h2>
-    <p>VitaGauge is developed by 智超 卫 (zhichao wei) for iPhone (iOS 15+). It organizes authorized Apple Health records, personal goals and general information. Version 1.1.0 is live, including Pro and widgets.</p>
+    <p>VitaGauge is distributed on the App Store by {SELLER} for iPhone (iOS 15+) and native iPad (Health data requires iPadOS 17+). It organizes authorized Apple Health records, personal goals and general information. Version {VERSION} is live, including native iPad layouts, paired Apple Watch, Pro and widgets.</p>
   </section>
   <section>
     <h2>Purchases and restoration</h2>
-    <p>Pro is a one-time non-consumable product (<span translate="no">com.vitagauge.pro.lifetime</span>) with no renewal and no Family Sharing. China list price CNY 38; Apple shows the local price. The purchase does not include an API key or model credits. Restore with the original Apple Account. Pending approval is not a completed purchase. Refunds: <a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>.</p>
+    <p>Pro is a one-time non-consumable product (<span translate="no">com.vitagauge.pro.lifetime</span>) with no renewal and no Family Sharing. Historical China reference price CNY 38; Apple shows current availability and price. The purchase does not include an API key or model credits. Restore with the original Apple Account. Pending approval is not a completed purchase. Refunds: <a href="https://reportaproblem.apple.com/">reportaproblem.apple.com</a>.</p>
   </section>
   <section>
     <h2>Your online provider</h2>
@@ -1505,6 +1532,7 @@ def page_sources_zh() -> str:
   <p class="note">{REVIEWED}</p>
 </header>
 <article class="article">
+  <section><h2>App Store / 版本与设备 · Release and devices</h2><p><a href="{STORE}">App Store · {VERSION}</a> · <a href="https://itunes.apple.com/lookup?id={APP_ID}&amp;country=us">Apple public lookup</a> · <a href="https://developer.apple.com/documentation/healthkit/hkhealthstore/ishealthdataavailable%28%29">Apple · iPad HealthKit availability</a></p><p>{REVIEWED} · Asia/Shanghai</p></section>
   <section><h2><a href="https://www.cdc.gov/sleep/about/index.html" rel="noopener">CDC · About Sleep</a></h2></section>
   <section><h2><a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity" rel="noopener">WHO · Physical activity</a></h2></section>
   <section><h2><a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" rel="noopener">WHO · Healthy diet</a></h2></section>
@@ -1530,6 +1558,7 @@ def page_sources_en() -> str:
   <p class="note">{REVIEWED}</p>
 </header>
 <article class="article">
+  <section><h2>App Store / 版本与设备 · Release and devices</h2><p><a href="{STORE}">App Store · {VERSION}</a> · <a href="https://itunes.apple.com/lookup?id={APP_ID}&amp;country=us">Apple public lookup</a> · <a href="https://developer.apple.com/documentation/healthkit/hkhealthstore/ishealthdataavailable%28%29">Apple · iPad HealthKit availability</a></p><p>{REVIEWED} · Asia/Shanghai</p></section>
   <section><h2><a href="https://www.cdc.gov/sleep/about/index.html" rel="noopener">CDC · About Sleep</a></h2></section>
   <section><h2><a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity" rel="noopener">WHO · Physical activity</a></h2></section>
   <section><h2><a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" rel="noopener">WHO · Healthy diet</a></h2></section>
@@ -1541,7 +1570,7 @@ def page_sources_en() -> str:
 
 
 def page_404() -> str:
-    extra = '<meta name="robots" content="noindex">'
+    extra = ""
     return (
         head(lang="zh-Hans", title="页面未找到 · 元气指数",
              description="元气指数网站没有这个地址。可前往官方网站、支持中心或隐私政策。",
@@ -1599,10 +1628,10 @@ def write_sitemap() -> None:
     ns = 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
     chunks = ['<?xml version="1.0" encoding="UTF-8"?>', f"<urlset {ns}>"]
     images = {
-        "app/": ["zh-Hans-summary.png", "zh-Hans-assistant.png", "zh-Hans-widget.png"],
-        "en/app/": ["en-summary.png", "en-assistant.png", "en-widget.png"],
-        "features/": ["zh-Hans-trend.png", "zh-Hans-sleep.png", "zh-Hans-goal.png"],
-        "en/features/": ["en-trend.png", "en-sleep.png", "en-goal.png"],
+        "app/": ["zh-Hans-summary.webp", "zh-Hans-assistant.webp", "zh-Hans-widget.webp"],
+        "en/app/": ["en-summary.webp", "en-assistant.webp", "en-widget.webp"],
+        "features/": ["zh-Hans-trend.webp", "zh-Hans-sleep.webp", "zh-Hans-goal.webp"],
+        "en/features/": ["en-trend.webp", "en-sleep.webp", "en-goal.webp"],
     }
     for path, lang, alt in SITEMAP_PATHS:
         loc = f"{BASE}/{path}" if path else f"{BASE}/"
@@ -1612,7 +1641,6 @@ def write_sitemap() -> None:
         chunks.append("<url>")
         chunks.append(f"<loc>{loc}</loc>")
         chunks.append(f"<lastmod>{TODAY}</lastmod>")
-        chunks.append("<changefreq>weekly</changefreq>")
         chunks.append(f'<xhtml:link rel="alternate" hreflang="zh-Hans" href="{zh_loc}"/>')
         chunks.append(f'<xhtml:link rel="alternate" hreflang="en" href="{en_loc}"/>')
         chunks.append(f'<xhtml:link rel="alternate" hreflang="x-default" href="{zh_loc}"/>')
@@ -1636,20 +1664,21 @@ def write_geo_files() -> None:
 - Official Chinese name: 元气指数
 - Official English name: VitaGauge
 - App Store listing name (EN): VitaGauge: Health Tracker
-- Developer / privacy controller: 智超 卫 (zhichao wei)
+- App Store seller: {SELLER}
+- Privacy controller: {CONTROLLER}
 - Contact: {EMAIL}
 - Bundle ID: {BUNDLE}
 - App Store ID: {APP_ID}
 - Version: {VERSION} (live since {FACTS["product"]["released"]}; first release {FACTS["product"]["firstReleased"]})
-- Platform: iOS {FACTS["product"]["minimumOs"]}+; Home and Lock Screen widgets on iOS {FACTS["product"]["widgetMinimumOs"]}+
-- Price: Free to download. VitaGauge Pro is a one-time non-consumable IAP (`{FACTS["iap"]["productId"]}`, Apple product {FACTS["iap"]["appleProductId"]}). China launch list price CNY {FACTS["iap"]["chinaLaunchPriceCNY"]}; Apple shows the local price. Not a subscription. Family Sharing is not enabled.
+- Platform: iPhone iOS {FACTS["product"]["minimumOs"]}+; native iPad app on iPadOS 15+ with Health data on iPadOS 17+; widgets on iOS / iPadOS 17+; paired Apple Watch on watchOS 10+ and compatible iPhone
+- Price: Free to download. VitaGauge Pro is a one-time non-consumable IAP (`{FACTS["iap"]["productId"]}`, Apple product {FACTS["iap"]["appleProductId"]}). Historical China reference price CNY {FACTS["iap"]["chinaLaunchPriceCNY"]}; Apple shows the local price. Not a subscription. Family Sharing is not enabled.
 - No Google Play listing.
 - No app account. No ads. No behavioral tracking SDK. No developer AI proxy or hosted model.
 - Health data: HealthKit read-only, 16 metrics. The app does not write HealthKit samples.
 - AI: optional, user-owned API key (BYOK), device-to-provider HTTPS after separate Who / What / Why consent.
-- Privacy policy effective {EFFECTIVE}; page reviewed {REVIEWED}; added disclosure for paired-watch processing planned for 1.2.0.
-- Planned release (not live): {FACTS["pendingRelease"]["summaryEn"]}
-- Paired-watch data boundary: {FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}
+- Privacy policy effective {EFFECTIVE}; page reviewed {REVIEWED}; paired-watch processing applies to released {VERSION}.
+- Current release: {FACTS["currentRelease"]["summaryEn"]}
+- Paired-watch data boundary: {FACTS["currentRelease"]["watchSync"]["disclosureEn"]}
 - Age rating: {FACTS["product"]["ageRatingNoteEn"]}
 - Not a medical device. Not a substitute for professional medical advice, diagnosis, prescription, or emergency care.
 
@@ -1663,10 +1692,18 @@ def write_geo_files() -> None:
 - Sources (zh): {url("sources")}
 - English equivalents: add `/en/` before the path (`/en/`, `/en/app/`, `/en/features/`, `/en/support/`, `/en/terms/`, `/en/sources/`)
 - App Store: {STORE}
-- App Store (China): {STORE_ZH}
+- App Store (region-aware): {STORE_ZH}
 - App Store (US): {STORE_EN}
 - Full machine facts: {BASE}/product-facts.json
 - Longer citation file: {BASE}/llms-full.txt
+
+## Verified release sources
+
+- App Store: {STORE}
+- Apple public lookup: https://itunes.apple.com/lookup?id={APP_ID}&country=us
+- Support and device requirements: {url("en", "support")}#devices
+- Version release timestamp (UTC): {FACTS["product"]["releasedAt"]}; date above uses Asia/Shanghai.
+- Availability depends on the local storefront.
 
 ## Cite this product as
 
@@ -1677,7 +1714,7 @@ def write_geo_files() -> None:
     faq_lines = "\n".join(f"Q: {q}\nA: {a}\n" for q, a in FAQ_EN)
     full = f"""# 元气指数 / VitaGauge: full citation sheet
 
-Last reviewed {REVIEWED} against released iOS app 1.1.0 and the planned 1.2.0 source. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains {EFFECTIVE}; the paired-watch disclosure applies when 1.2.0 provides that feature.
+Last reviewed {REVIEWED} against released app {VERSION}. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains {EFFECTIVE}; the paired-watch disclosure applies to released {VERSION}.
 
 ## Entity
 
@@ -1685,12 +1722,12 @@ Last reviewed {REVIEWED} against released iOS app 1.1.0 and the planned 1.2.0 so
 | --- | --- |
 | Official name (zh) | 元气指数 |
 | Official name (en) | VitaGauge |
-| Store title (zh) | 元气指数 |
+| Store title (zh) | {FACTS["product"]["storeNameZh"]} |
 | Store title (en) | VitaGauge: Health Tracker |
 | Tagline (zh) | {FACTS["product"]["taglineZh"]} |
 | Tagline (en) | {FACTS["product"]["taglineEn"]} |
-| Legal person / controller | 智超 卫 |
-| Latin name used in copyright | zhichao wei |
+| Privacy controller | {CONTROLLER} |
+| App Store seller | {SELLER} |
 | Support and privacy email | {EMAIL} |
 | Apple seller | {FACTS["legal"]["appleSellerName"]} |
 | Apple Team ID | {FACTS["legal"]["appleTeamId"]} |
@@ -1705,6 +1742,9 @@ Last reviewed {REVIEWED} against released iOS app 1.1.0 and the planned 1.2.0 so
 | First App Store release | {FACTS["product"]["firstReleased"]} |
 | Minimum iOS | {FACTS["product"]["minimumOs"]} |
 | Widget minimum iOS | {FACTS["product"]["widgetMinimumOs"]} |
+| iPad Health minimum iPadOS | 17.0 |
+| Paired Watch minimum watchOS | 10.0 |
+| UTC release timestamp | {FACTS["product"]["releasedAt"]} |
 | Store category | Health & Fitness; Lifestyle |
 | Age rating on the App Store | {FACTS["product"]["contentRating"]} |
 | Children | Not intended for children under {FACTS["legal"]["childrenAge"]} |
@@ -1719,22 +1759,22 @@ Last reviewed {REVIEWED} against released iOS app 1.1.0 and the planned 1.2.0 so
 3. Body temperature is the body-temperature type, not sleep wrist temperature. The two blood-pressure readings are not joined across time. Sleep is split by calendar day.
 4. Missing records stay blank. They are not filled with zero.
 5. Free features: today summary, 7-day trends, basic local questions, built-in lifestyle information, one health goal.
-6. VitaGauge Pro (one-time IAP `{FACTS["iap"]["productId"]}`) unlocks 30-day trends and statistics, comparison of two selected dates, metric correlation, multiple goals, and optional online AI. China launch list price is CNY {FACTS["iap"]["chinaLaunchPriceCNY"]}. Apple displays the actual local price. No auto-renewal. Family Sharing is off.
+6. VitaGauge Pro (one-time IAP `{FACTS["iap"]["productId"]}`) unlocks 30-day trends and statistics, comparison of two selected dates, metric correlation, multiple goals, and optional online AI. Historical China reference price is CNY {FACTS["iap"]["chinaLaunchPriceCNY"]}. Apple displays the actual local price. No auto-renewal. Family Sharing is off.
 7. Conversation modes: Local; API; Local + API. Online modes need Pro, the user's own API key, and recipient consent named Who / What / Why.
-8. Widgets on iOS 17+ show the last synced summary or goals. Open the app to sync. They are not real-time monitors and do not call AI.
+8. Widgets on iOS / iPadOS 17+ show the last synced summary or goals. Open the app to sync. They are not real-time monitors and do not call AI.
 9. Voice input is on-device speech recognition only, max 55 seconds, text lands in the editor for review before send.
 10. No developer-operated account, no ads, no third-party analytics or crash SDK, no developer AI key or relay server.
 
-## Planned release 1.2.0 (not live)
+## Current release {VERSION}
 
-{FACTS["pendingRelease"]["summaryEn"]}
+{FACTS["currentRelease"]["summaryEn"]}
 
-{FACTS["pendingRelease"]["supportEn"]}
+{FACTS["currentRelease"]["supportEn"]}
 
 ## Data practices (do not over-claim)
 
 - Raw HealthKit samples remain in Apple Health.
-- Planned paired-watch processing: {FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}
+- Paired-watch processing: {FACTS["currentRelease"]["watchSync"]["disclosureEn"]}
 - Goals, chat, profile, avatar, AI metadata and widget snapshots use iOS file protection and are excluded from system backups.
 - API keys use This-Device-Only Keychain, not iCloud Keychain.
 - Preset hosts: {recipients}. Custom HTTPS endpoints are allowed.
@@ -1807,7 +1847,6 @@ User-agent: DuckAssistBot
 Allow: /
 
 Sitemap: {BASE}/sitemap.xml
-LLM-Content: {BASE}/llms.txt
 """
     security = f"""Contact: mailto:{EMAIL}
 Expires: 2027-09-18T00:00:00.000Z
@@ -1816,7 +1855,8 @@ Canonical: {BASE}/.well-known/security.txt
 Policy: {BASE}/
 """
     humans = f"""/* TEAM */
-Developer: 智超 卫 / zhichao wei
+App Store seller: {SELLER}
+Privacy controller: {CONTROLLER}
 Contact: {EMAIL}
 From: China
 
@@ -1828,7 +1868,7 @@ Do not invent medical claims.
 """
     ai_txt = f"""# ai.txt for 元气指数 / VitaGauge
 # Public product facts may be used for retrieval and citation.
-# Do not invent diagnoses, prices other than the China list price, or an Android listing.
+# Use verified facts. Prices and availability are set by Apple. Do not invent diagnoses or an Android listing.
 
 User-Agent: *
 Allow: /

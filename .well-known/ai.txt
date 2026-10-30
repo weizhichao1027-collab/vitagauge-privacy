@@ -1,6 +1,6 @@
 # ai.txt for 元气指数 / VitaGauge
 # Public product facts may be used for retrieval and citation.
-# Do not invent diagnoses, prices other than the China list price, or an Android listing.
+# Use verified facts. Prices and availability are set by Apple. Do not invent diagnoses or an Android listing.
 
 User-Agent: *
 Allow: /

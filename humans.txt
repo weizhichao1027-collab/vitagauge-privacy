@@ -1,10 +1,11 @@
 /* TEAM */
-Developer: 智超 卫 / zhichao wei
+App Store seller: Shanghai Qishan Cultural Communication Co., Ltd.
+Privacy controller: zhichao wei
 Contact: weizhichao1027@gmail.com
 From: China
 
 /* SITE */
-Last review: 2026-10-30
+Last review: 2026-10-31
 Standards: HTML, CSS, JSON-LD
 Software: static GitHub Pages
 Do not invent medical claims.

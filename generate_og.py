@@ -3,12 +3,15 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent
 ASSETS = ROOT / "assets"
+FACTS = json.loads((ROOT / "product-facts.json").read_text())
 W, H = 1200, 630
 BG = (228, 238, 227)
 INK = (23, 54, 44)
@@ -70,7 +73,7 @@ def card(kicker: str, title: str, line: str, filename: str) -> None:
     draw.text((92, 84), kicker, font=font(28), fill=MUTED)
     draw.multiline_text((300, 176), title, font=font(58, bold=True), fill=INK, spacing=10)
     draw.multiline_text((300, 360), line, font=font(30), fill=MUTED, spacing=8)
-    draw.text((92, 548), "App Store 1.1.0  weizhichao1027-collab.github.io", font=font(22), fill=FOREST)
+    draw.text((92, 548), f"App Store {FACTS['product']['version']}  weizhichao1027-collab.github.io", font=font(22), fill=FOREST)
     dest = ASSETS / filename
     img.save(dest, "PNG", optimize=True)
     print(f"wrote {dest} {dest.stat().st_size}")
@@ -81,13 +84,13 @@ def main() -> None:
     card(
         "元气指数  /  VitaGauge",
         "把每天的健康\n看得更明白",
-        "Apple 健康摘要、16 项趋势与本地问答\n已在 App Store 上架，无需账户即可开始",
+        "Apple 健康摘要、16 项趋势与本地问答\n1.2.0 已上架，支持 iPad 与配对 Apple Watch",
         "og-default.png",
     )
     card(
         "功能与价格  /  Features",
         "免费开始\nPro 一次买断",
-        "7 天趋势与 1 个目标免费\n中国区首发价 ¥38，以 Apple 购买页为准",
+        "7 天趋势与 1 个目标免费\n价格与地区可用性，以 Apple 购买页为准",
         "og-features.png",
     )
     card(
@@ -99,9 +102,26 @@ def main() -> None:
     card(
         "隐私政策  /  Privacy",
         "先在本机处理\n发送由你决定",
-        "HealthKit 只读，无账户，无分析 SDK\n生效 2026-09-16，本页复核 2026-09-18",
+        "HealthKit 只读，无账户，无分析 SDK\n生效 2026-09-16，本页复核 2026-10-31",
         "og-privacy.png",
     )
+
+    # Lossless web assets keep production UI pixels intact while reducing transfer size.
+    for language in ("zh-Hans", "en"):
+        for name in ("summary", "assistant", "trend", "sleep", "goal", "local", "widget", "ipad", "watch"):
+            path = ASSETS / f"{language}-{name}.png"
+            with Image.open(path) as source:
+                source.save(path.with_suffix(".webp"), "WEBP", lossless=True, method=6)
+    records = []
+    for path in sorted(p for p in ASSETS.iterdir() if p.suffix in {".png", ".webp"}):
+        with Image.open(path) as source:
+            size = list(source.size)
+        records.append({"file": path.name, "size": size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+    (ASSETS / "manifest.json").write_text(json.dumps({
+        "version": FACTS["product"]["version"], "reviewed": FACTS["reviewed"],
+        "data": "synthetic production UI captures and brand artwork; no personal health records",
+        "assets": records,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

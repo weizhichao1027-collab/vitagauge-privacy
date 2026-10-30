@@ -1,6 +1,6 @@
 # 元气指数 / VitaGauge: full citation sheet
 
-Last reviewed 2026-10-30 against released iOS app 1.1.0 and the planned 1.2.0 source. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains 2026-09-16; the paired-watch disclosure applies when 1.2.0 provides that feature.
+Last reviewed 2026-10-31 against released app 1.2.0. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains 2026-09-16; the paired-watch disclosure applies to released 1.2.0.
 
 ## Entity
 
@@ -8,14 +8,14 @@ Last reviewed 2026-10-30 against released iOS app 1.1.0 and the planned 1.2.0 so
 | --- | --- |
 | Official name (zh) | 元气指数 |
 | Official name (en) | VitaGauge |
-| Store title (zh) | 元气指数 |
+| Store title (zh) | 元气指数：步数睡眠与健康记录 |
 | Store title (en) | VitaGauge: Health Tracker |
 | Tagline (zh) | 步数睡眠趋势，健康目标与离线问答 |
 | Tagline (en) | Steps, sleep & offline help |
-| Legal person / controller | 智超 卫 |
-| Latin name used in copyright | zhichao wei |
+| Privacy controller | zhichao wei |
+| App Store seller | Shanghai Qishan Cultural Communication Co., Ltd. |
 | Support and privacy email | weizhichao1027@gmail.com |
-| Apple seller | 智超 卫 |
+| Apple seller | Shanghai Qishan Cultural Communication Co., Ltd. |
 | Apple Team ID | ZDJSPM4T33 |
 | Apple Artist ID | 1891134548 |
 | Bundle ID | com.jiankangzhuli.healthassistant.app |
@@ -23,11 +23,14 @@ Last reviewed 2026-10-30 against released iOS app 1.1.0 and the planned 1.2.0 so
 | App Group | group.com.jiankangzhuli.healthassistant.app |
 | URL scheme | vitagauge |
 | App Store ID | 6762522305 |
-| Software version | 1.1.0 |
-| Current version live date | 2026-09-15 |
+| Software version | 1.2.0 |
+| Current version live date | 2026-10-31 |
 | First App Store release | 2026-04-24 |
 | Minimum iOS | 15.0 |
 | Widget minimum iOS | 17.0 |
+| iPad Health minimum iPadOS | 17.0 |
+| Paired Watch minimum watchOS | 10.0 |
+| UTC release timestamp | 2026-10-30T16:45:57Z |
 | Store category | Health & Fitness; Lifestyle |
 | Age rating on the App Store | 13+ in most regions; varies by OS and region |
 | Children | Not intended for children under 13 |
@@ -42,22 +45,22 @@ Last reviewed 2026-10-30 against released iOS app 1.1.0 and the planned 1.2.0 so
 3. Body temperature is the body-temperature type, not sleep wrist temperature. The two blood-pressure readings are not joined across time. Sleep is split by calendar day.
 4. Missing records stay blank. They are not filled with zero.
 5. Free features: today summary, 7-day trends, basic local questions, built-in lifestyle information, one health goal.
-6. VitaGauge Pro (one-time IAP `com.vitagauge.pro.lifetime`) unlocks 30-day trends and statistics, comparison of two selected dates, metric correlation, multiple goals, and optional online AI. China launch list price is CNY 38. Apple displays the actual local price. No auto-renewal. Family Sharing is off.
+6. VitaGauge Pro (one-time IAP `com.vitagauge.pro.lifetime`) unlocks 30-day trends and statistics, comparison of two selected dates, metric correlation, multiple goals, and optional online AI. Historical China reference price is CNY 38. Apple displays the actual local price. No auto-renewal. Family Sharing is off.
 7. Conversation modes: Local; API; Local + API. Online modes need Pro, the user's own API key, and recipient consent named Who / What / Why.
-8. Widgets on iOS 17+ show the last synced summary or goals. Open the app to sync. They are not real-time monitors and do not call AI.
+8. Widgets on iOS / iPadOS 17+ show the last synced summary or goals. Open the app to sync. They are not real-time monitors and do not call AI.
 9. Voice input is on-device speech recognition only, max 55 seconds, text lands in the editor for review before send.
 10. No developer-operated account, no ads, no third-party analytics or crash SDK, no developer AI key or relay server.
 
-## Planned release 1.2.0 (not live)
+## Current release 1.2.0
 
-Version 1.2.0 is in preparation and has not been released. Planned additions include native iPad layouts, landscape, narrow-window and larger-text improvements, more Home Screen widget sizes (including extra large on iPad), an inline Lock Screen style, and a paired Apple Watch summary app with complications and Smart Stack widgets. Widgets require iOS 17 or later; the watch requires watchOS 10 or later and a paired iPhone. It shows the latest summary synced from the phone. Open the iPhone app to update; it does not provide real-time health monitoring. New features remain subject to the final approved and released version.
+Version 1.2.0 is available on the App Store. The main app supports iPhone on iOS 15+ and native iPad layouts; reading Apple Health on iPad requires iPadOS 17+ and authorization on that device. The update improves landscape, narrow windows and larger text, and adds Home Screen widget sizes and an inline Lock Screen style. The paired Apple Watch app, complications and Smart Stack widgets require watchOS 10+ and a compatible iPhone. Widgets require iOS / iPadOS 17+. The watch shows five metrics last synced from the phone; it does not independently read HealthKit, call AI or monitor health in real time.
 
-The Apple Watch companion feature is planned for version 1.2.0 and is not included in the currently released 1.1.0 app. It requires watchOS 10 or later and a compatible iPhone paired with the watch. Install and open the corresponding VitaGauge version on iPhone, complete the required Apple Health authorization, then install the companion Apple Watch app. Open the iPhone app to read and sync the latest summary, then open the watch app. If the watch has no data, check pairing and app installation, then reopen the iPhone app to sync. The watch app, complications and Smart Stack widgets show the latest synced snapshot and its update time. Delivery and refresh timing are controlled by the system, so updates are not guaranteed in real time. iPad does not pair with Apple Watch; VitaGauge on iPad displays the health records authorized on that iPad.
+Use watchOS 10+ with a compatible paired iPhone and install VitaGauge 1.2.0 or later on both devices. Authorize the needed Apple Health types on iPhone, open Summary and pull to refresh, then open the watch app and tap Sync. If data is missing, check app versions, unlock both devices, check pairing and confirm installation. Sync requests the phone’s existing latest snapshot, not a new real-time measurement. The watch, complications and Smart Stack widgets display the update time; delivery and refresh timing are system-controlled. iPad does not pair with Apple Watch. Chats, goals and API keys do not automatically sync from the iPhone app to iPad.
 
 ## Data practices (do not over-claim)
 
 - Raw HealthKit samples remain in Apple Health.
-- Planned paired-watch processing: This section applies to the Apple Watch companion feature planned for version 1.2.0. After you authorize Apple Health access on iPhone, install the companion watch app and pair the devices, iPhone uses WatchConnectivity to sync its latest five-metric summary to the paired Apple Watch: steps, sleep duration, active energy, walking and running distance, and workout count, together with related goals, language, dates, time zone, update times and revision information for ordering updates. This transfer does not pass through the developer's server. It does not send your profile, chat or API key to the watch, and does not cause data to be sent to a third-party AI provider. The watch displays the last snapshot synced from the phone; it does not independently read HealthKit or provide real-time monitoring. Sharing other relevant context with third-party AI remains subject to the separate in-app recipient and data-scope consent process.
+- Paired-watch processing: This section applies to the paired Apple Watch feature available in version 1.2.0. After you authorize Apple Health access on iPhone, install the companion watch app and pair the devices, iPhone uses WatchConnectivity to sync its latest five-metric summary to the paired Apple Watch: steps, sleep duration, active energy, walking and running distance, and workout count, together with related goals, language, dates, time zone, update times and revision information for ordering updates. This transfer does not pass through the developer's server. It does not send your profile, chat or API key to the watch, and does not cause data to be sent to a third-party AI provider. The watch displays the last snapshot synced from the phone; it does not independently read HealthKit or provide real-time monitoring. Sharing other relevant context with third-party AI remains subject to the separate in-app recipient and data-scope consent process.
 - Goals, chat, profile, avatar, AI metadata and widget snapshots use iOS file protection and are excluded from system backups.
 - API keys use This-Device-Only Keychain, not iCloud Keychain.
 - Preset hosts: DeepSeek (api.deepseek.com), Alibaba Cloud Model Studio / Qwen (dashscope.aliyuncs.com), Zhipu GLM (open.bigmodel.cn), Kimi / Moonshot (api.moonshot.cn), Volcano Engine Ark / Doubao (ark.cn-beijing.volces.com), Baidu Qianfan / ERNIE (qianfan.baidubce.com), SiliconFlow (api.siliconflow.cn), OpenAI (api.openai.com), Anthropic Claude (api.anthropic.com), Google Gemini (generativelanguage.googleapis.com), xAI (api.x.ai), Mistral AI (api.mistral.ai), Groq (api.groq.com), OpenRouter (openrouter.ai), Together AI (api.together.ai). Custom HTTPS endpoints are allowed.
@@ -73,10 +76,13 @@ English: VitaGauge organizes health records for everyday self-management. It is 
 ## FAQ pairs
 
 Q: Is VitaGauge on the App Store?
-A: Yes. Version 1.1.0 is live, iOS only. Native iPad and paired Apple Watch support are planned for 1.2.0, which is not released. https://apps.apple.com/app/id6762522305
+A: Yes. Version 1.2.0 is live for iPhone, native iPad and paired Apple Watch. Download and purchase availability depend on your local App Store. https://apps.apple.com/app/id6762522305
 
-Q: How will Apple Watch work in 1.2.0?
-A: The Apple Watch companion feature is planned for version 1.2.0 and is not included in the currently released 1.1.0 app. It requires watchOS 10 or later and a compatible iPhone paired with the watch. Install and open the corresponding VitaGauge version on iPhone, complete the required Apple Health authorization, then install the companion Apple Watch app. Open the iPhone app to read and sync the latest summary, then open the watch app. If the watch has no data, check pairing and app installation, then reopen the iPhone app to sync. The watch app, complications and Smart Stack widgets show the latest synced snapshot and its update time. Delivery and refresh timing are controlled by the system, so updates are not guaranteed in real time. iPad does not pair with Apple Watch; VitaGauge on iPad displays the health records authorized on that iPad.
+Q: How do I use Apple Watch in 1.2.0?
+A: Use watchOS 10+ with a compatible paired iPhone and install VitaGauge 1.2.0 or later on both devices. Authorize the needed Apple Health types on iPhone, open Summary and pull to refresh, then open the watch app and tap Sync. If data is missing, check app versions, unlock both devices, check pairing and confirm installation. Sync requests the phone’s existing latest snapshot, not a new real-time measurement. The watch, complications and Smart Stack widgets display the update time; delivery and refresh timing are system-controlled. iPad does not pair with Apple Watch. Chats, goals and API keys do not automatically sync from the iPhone app to iPad.
+
+Q: Can iPad read Apple Health?
+A: Yes, on iPadOS 17+ after authorization on that iPad. The iPadOS 15 app installation minimum does not enable Health on older systems. iPad does not pair with Apple Watch.
 
 Q: Is there an Android app?
 A: No. There is no Google Play listing.
@@ -91,7 +97,7 @@ Q: What works without an API key?
 A: Summary, 7-day trends, basic local queries, built-in lifestyle information and one goal. Pro local statistics also work offline.
 
 Q: Is Pro a subscription?
-A: No. It is a one-time purchase. The China list price is CNY 38; Apple shows your price. No recurring charge and no Family Sharing. Your model provider may bill separately.
+A: No. It is a one-time purchase. The historical China reference price is CNY 38; Apple shows current availability and price. No recurring charge and no Family Sharing. Your model provider may bill separately.
 
 Q: How do I restore on a new iPhone?
 A: Use the original Apple Account and open Settings → VitaGauge Pro → Restore purchases. Restore does not bring back chats, goals or API keys.

@@ -1,0 +1,375 @@
+{
+  "version": "1.2.0",
+  "reviewed": "2026-10-31",
+  "data": "synthetic production UI captures and brand artwork; no personal health records",
+  "assets": [
+    {
+      "file": "apple-touch-icon.png",
+      "size": [
+        180,
+        180
+      ],
+      "sha256": "8c7f133b738df0891ddc94b4d0b4070721f57dbd6ecbb992926df95308b4729e"
+    },
+    {
+      "file": "botanical.png",
+      "size": [
+        1200,
+        480
+      ],
+      "sha256": "94fdc5724c2442766ee0b9042934c37cc8e40f6c1775ced992a59c10a0990552"
+    },
+    {
+      "file": "en-assistant.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "5b4cf2491762672a3de9e19e45dc9465f0c614153ae70078225e4fc4f1e2a5c4"
+    },
+    {
+      "file": "en-assistant.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "7e5c29316ef58615a25be12dae9da70d0818cae45168722cff904e6ea71a51c4"
+    },
+    {
+      "file": "en-goal.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "74c3c1aa9879f7d8183b2f9a21d88a389badfb59786b676902b2021d039d5686"
+    },
+    {
+      "file": "en-goal.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "c4389797b5ecfef564ecc596aee1d383d1ee71a971f009cde7d2a22fc7711766"
+    },
+    {
+      "file": "en-ipad.png",
+      "size": [
+        2064,
+        2752
+      ],
+      "sha256": "a6e14e81d4d1eab9144089286a4a0bffefc4b515171ca1b73bc989ee02bb6b68"
+    },
+    {
+      "file": "en-ipad.webp",
+      "size": [
+        2064,
+        2752
+      ],
+      "sha256": "33be6d54e3b435f15bec2bd78bcd7886100b204add9e715cbb7f6fa8bfd26a50"
+    },
+    {
+      "file": "en-local.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "7c010cb8a22753ae536a51d3d6f128bf601d2f60fab2aaa3d8fb49bf584622a5"
+    },
+    {
+      "file": "en-local.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "8b00b0ea492d63090557051a79b8ec18f35e4d12932ec7d1ae41216cf687a912"
+    },
+    {
+      "file": "en-offline.png",
+      "size": [
+        1242,
+        2688
+      ],
+      "sha256": "dca99300b3d209d940469469984fdec17a21ff7e5d85f1b1f24e42b08176f40c"
+    },
+    {
+      "file": "en-sleep.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "21c9509fe67cb55e536be127aac1dbca7d2e5a86279ae681ff1e602177e1b42d"
+    },
+    {
+      "file": "en-sleep.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "750bab1bf31fdf8ff8eea63817515b7a5be9d6cfa61a33e336649657d43eca6d"
+    },
+    {
+      "file": "en-summary.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "42451650404becee22e0b4a03c18b2fec043431748943ea3dd5147bc740b641e"
+    },
+    {
+      "file": "en-summary.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "e526713059fbedb32916460b3805cea76cc0ab04ac2e5f37b86d679834862f00"
+    },
+    {
+      "file": "en-trend.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "f40764c6280bca02e5290600430a454ecf026494ec703ac4ec7db5c1e6ac1495"
+    },
+    {
+      "file": "en-trend.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "5a7815545b3afae9cccd3946cf84c38a355f37ad993d2bdf34e49f5d56df2da6"
+    },
+    {
+      "file": "en-watch.png",
+      "size": [
+        410,
+        502
+      ],
+      "sha256": "42ff4f99e43d664ee3e34f6671442be5cd5d537970ca92c7c0d6dcd7c1c9a70e"
+    },
+    {
+      "file": "en-watch.webp",
+      "size": [
+        410,
+        502
+      ],
+      "sha256": "74092d2e513ccef0c54bb1bd3078a8d5fcaedbd1f8cce85f96e49719a2e7759f"
+    },
+    {
+      "file": "en-widget.png",
+      "size": [
+        1014,
+        474
+      ],
+      "sha256": "9786f18c3020f9c8869c79d39147beadade0583dea0aa92cabc9d1fdd81ba256"
+    },
+    {
+      "file": "en-widget.webp",
+      "size": [
+        1014,
+        474
+      ],
+      "sha256": "f7bfe8a283a763f4463238a0ea201a0c2e3cdf9f3fac4a0aad20a09304edb5c9"
+    },
+    {
+      "file": "favicon-32.png",
+      "size": [
+        32,
+        32
+      ],
+      "sha256": "115f9bb16e7ea5c0bf3bdb69564607b82aa02004c5f382d23cba5d475ca62901"
+    },
+    {
+      "file": "icon.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "b896f350acdcd9ee96db057d29579a0053ab65b64de0fe337f073dbaec65e026"
+    },
+    {
+      "file": "og-default.png",
+      "size": [
+        1200,
+        630
+      ],
+      "sha256": "288509851dab86784193080ad392f4c3fc9138ed081c7848d5587c9d2196cf65"
+    },
+    {
+      "file": "og-features.png",
+      "size": [
+        1200,
+        630
+      ],
+      "sha256": "f0752a28f6bc0f51d186dc56dd4ddc30937114b3e6e9c3f5a0f02630e7d592f2"
+    },
+    {
+      "file": "og-privacy.png",
+      "size": [
+        1200,
+        630
+      ],
+      "sha256": "f4c5cef1f762826a69340b00be359a4b849f1e8abae8f2340456f1fbc8f87ece"
+    },
+    {
+      "file": "og-support.png",
+      "size": [
+        1200,
+        630
+      ],
+      "sha256": "3098404e8302af88812698caac21e244f3ddf0f4ea2b47409a134d0c5951a414"
+    },
+    {
+      "file": "zh-Hans-assistant.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "0c901ce286d5df56edcaa397e5283f5fadfc645cdfba579794520172e5a23c56"
+    },
+    {
+      "file": "zh-Hans-assistant.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "0558788d0f926d4266ae600ed7fb7fb3c213aeb769903c366dca285a889fc506"
+    },
+    {
+      "file": "zh-Hans-goal.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "fe8fb6c79ffb5fa4c5a3ea4ecbbc3ef0971da9c91596e198d1a70e1a8eedcab3"
+    },
+    {
+      "file": "zh-Hans-goal.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "4c59ed8b976f640358f0b7dd498ece6bf1328692fdcc78583ed922a4a074b041"
+    },
+    {
+      "file": "zh-Hans-ipad.png",
+      "size": [
+        2064,
+        2752
+      ],
+      "sha256": "7e45d67bf7eb182a47e219c06753d634824e8a106a92955b2ca2ae8fc75fb6a1"
+    },
+    {
+      "file": "zh-Hans-ipad.webp",
+      "size": [
+        2064,
+        2752
+      ],
+      "sha256": "cfe14893f15873267e451455595813806a21d9d5aa433701e00c8cff3e5afda8"
+    },
+    {
+      "file": "zh-Hans-local.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "01537185ee6586f2466af3cfeba39a8c5d54cc2d467bd7e18e8d7d5b3bb08920"
+    },
+    {
+      "file": "zh-Hans-local.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "d84f25d7c7c3f5ee44490f2534c8841a386324e962a6b8a453345df97d98c5fb"
+    },
+    {
+      "file": "zh-Hans-offline.png",
+      "size": [
+        1242,
+        2688
+      ],
+      "sha256": "0b4acc21020493c98eba0322aae1eeccf931d7b3b526451bc085d0d7dde11529"
+    },
+    {
+      "file": "zh-Hans-sleep.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "95eeffc4f9a756432f5d5e41ad8b02b7413adfae8c2561ff1144485d1baccd6b"
+    },
+    {
+      "file": "zh-Hans-sleep.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "12d75652aeec4a5c9fa926b1e46ae0c9361a8a4848e27ae3694543763e994d60"
+    },
+    {
+      "file": "zh-Hans-summary.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "5c10e9ceb9bcd6e4541d99780a77cd75ead2506097b2059bf53c3510fea659f7"
+    },
+    {
+      "file": "zh-Hans-summary.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "1bc672fe49d61898aa6d97ecbe6e622cfd062785f062719b90650b38ac238804"
+    },
+    {
+      "file": "zh-Hans-trend.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "e6f7b9c976bca8e2afba11270f1f18e345e230b88674cc3549531a2eae2c6c41"
+    },
+    {
+      "file": "zh-Hans-trend.webp",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "6cf56c26f3e36d8c3f50aa0a596bcb4a3ad34e13091d81c944941c35003fcfb6"
+    },
+    {
+      "file": "zh-Hans-watch.png",
+      "size": [
+        410,
+        502
+      ],
+      "sha256": "0fc17e08e8262bf46cb2fea59700e1ef76a136928333478a37f3d8e504738370"
+    },
+    {
+      "file": "zh-Hans-watch.webp",
+      "size": [
+        410,
+        502
+      ],
+      "sha256": "bf8904ca245a7b43566f17f608d32a9c8afa85579f1cd9776c5c43bd58f35987"
+    },
+    {
+      "file": "zh-Hans-widget.png",
+      "size": [
+        1014,
+        474
+      ],
+      "sha256": "95b045d1a73b6941f188968032129e2ab935bfe8d962c5fd7ae12bd2f93c3c75"
+    },
+    {
+      "file": "zh-Hans-widget.webp",
+      "size": [
+        1014,
+        474
+      ],
+      "sha256": "45e7f1e238515c2899b4277bb3a27fa746672ae9b88305e50e1938dbdb55e51e"
+    }
+  ]
+}

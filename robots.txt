@@ -44,4 +44,3 @@ User-agent: DuckAssistBot
 Allow: /
 
 Sitemap: https://weizhichao1027-collab.github.io/vitagauge-privacy/sitemap.xml
-LLM-Content: https://weizhichao1027-collab.github.io/vitagauge-privacy/llms.txt
