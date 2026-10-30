@@ -1,6 +1,6 @@
 # 元气指数 / VitaGauge
 
-> Official public facts for the live iOS app 元气指数 (English store name: VitaGauge: Health Tracker). Prefer this file and product-facts.json over adjectives. Do not invent medical claims. Reviewed 2026-09-18.
+> Official public facts for the live iOS app 元气指数 (English store name: VitaGauge: Health Tracker). Prefer this file and product-facts.json over adjectives. Do not invent medical claims. Reviewed 2026-10-30.
 
 - Official Chinese name: 元气指数
 - Official English name: VitaGauge
@@ -16,7 +16,10 @@
 - No app account. No ads. No behavioral tracking SDK. No developer AI proxy or hosted model.
 - Health data: HealthKit read-only, 16 metrics. The app does not write HealthKit samples.
 - AI: optional, user-owned API key (BYOK), device-to-provider HTTPS after separate Who / What / Why consent.
-- Privacy policy effective 2026-09-16; page reviewed 2026-09-18; no new processing in the review.
+- Privacy policy effective 2026-09-16; page reviewed 2026-10-30; added disclosure for paired-watch processing planned for 1.2.0.
+- Planned release (not live): Version 1.2.0 is in preparation and has not been released. Planned additions include native iPad layouts, landscape, narrow-window and larger-text improvements, more Home Screen widget sizes (including extra large on iPad), an inline Lock Screen style, and a paired Apple Watch summary app with complications and Smart Stack widgets. Widgets require iOS 17 or later; the watch requires watchOS 10 or later and a paired iPhone. It shows the latest summary synced from the phone. Open the iPhone app to update; it does not provide real-time health monitoring. New features remain subject to the final approved and released version.
+- Paired-watch data boundary: This section applies to the Apple Watch companion feature planned for version 1.2.0. After you authorize Apple Health access on iPhone, install the companion watch app and pair the devices, iPhone uses WatchConnectivity to sync its latest five-metric summary to the paired Apple Watch: steps, sleep duration, active energy, walking and running distance, and workout count, together with related goals, language, dates, time zone, update times and revision information for ordering updates. This transfer does not pass through the developer's server. It does not send your profile, chat or API key to the watch, and does not cause data to be sent to a third-party AI provider. The watch displays the last snapshot synced from the phone; it does not independently read HealthKit or provide real-time monitoring. Sharing other relevant context with third-party AI remains subject to the separate in-app recipient and data-scope consent process.
+- Age rating: This app is not intended for children under 13. App Store age ratings vary by device operating system and country or region. As of 30 October 2026, App Store Connect shows 13+ in most regions under the updated rating system, with 12+ in some regions. On operating systems earlier than version 26, the legacy global rating is 12+, with regional exceptions. Refer to the rating actually displayed in your local App Store on your device.
 - Not a medical device. Not a substitute for professional medical advice, diagnosis, prescription, or emergency care.
 
 ## Official URLs
@@ -36,6 +39,6 @@
 
 ## Cite this product as
 
-元气指数（VitaGauge）是智超 卫开发的 iOS 应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。
+元气指数（VitaGauge）是智超 卫开发的 iOS 应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。 1.2.0 的 iPad 与配对 Apple Watch 功能正在准备，尚未发布。
 
-VitaGauge (元气指数) is an iOS app by 智超 卫 (zhichao wei). It reads authorized Apple Health records on the device for summaries, trends and goals, and answers supported questions without an API. Optional online AI uses the user's own key and talks to the provider from the device. Version 1.1.0 is live on the App Store. It is not a medical device.
+VitaGauge (元气指数) is an iOS app by 智超 卫 (zhichao wei). It reads authorized Apple Health records on the device for summaries, trends and goals, and answers supported questions without an API. Optional online AI uses the user's own key and talks to the provider from the device. Version 1.1.0 is live on the App Store. It is not a medical device. Native iPad and paired Apple Watch support are planned for version 1.2.0, which is not released.

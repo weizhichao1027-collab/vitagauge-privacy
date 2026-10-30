@@ -412,8 +412,14 @@ def cite_box(lang: str) -> str:
 
 def privacy_dates(zh: bool) -> str:
     if zh:
-        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}（未新增处理类型）。"
-    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Page reviewed {REVIEWED}. No new processing was added."
+        return f"生效：{EFFECTIVE}。上一版：{PREVIOUS}。本页复核：{REVIEWED}，补充待发布 1.2.0 的配对手表同步说明。"
+    return f"Effective {EFFECTIVE}. Previous version {PREVIOUS}. Page reviewed {REVIEWED}, with paired-watch disclosure for the planned 1.2.0 release."
+
+
+def pending_release_block(zh: bool) -> str:
+    title = "1.2.0 准备中的设备支持" if zh else "Device support planned for 1.2.0"
+    body = FACTS["pendingRelease"]["summaryZh" if zh else "summaryEn"]
+    return f'<section class="article" id="pending-release"><h2>{title}</h2><p>{body}</p></section>'
 
 
 def howto_first_launch(zh: bool) -> dict:
@@ -547,6 +553,7 @@ def page_app_zh() -> str:
     </div>
   </div>
 </section>
+{pending_release_block(True)}
 {cite_box("zh")}
 <section class="section">
   <div class="banner">
@@ -684,6 +691,7 @@ def page_app_en() -> str:
     </div>
   </div>
 </section>
+{pending_release_block(False)}
 {cite_box("en")}
 <section class="section">
   <div class="banner">
@@ -812,6 +820,7 @@ def page_features_zh() -> str:
   <p>本地助理支持最近 1 到 30 天及明确日期。更长窗口、两日比较和关联需要 Pro。关联至少需要 7 个已结束的有效配对日，且两组都有变化；这不是因果。缺失不当成零。体温是体温类型，不是睡眠腕温。血压两项不跨时间拼成一次测量。睡眠按自然日分割。AI 回复不能替代诊疗。</p>
   <p><a href="../support/">支持中心</a>，<a href="../terms/">使用与购买说明</a></p>
 </section>
+{pending_release_block(True)}
 {cite_box("zh")}
 <section class="section">
   <div class="notice"><p>{FACTS["disclaimerZh"]}</p></div>
@@ -869,6 +878,7 @@ def page_features_en() -> str:
   <p>The offline assistant supports recent 1 to 30 day windows and explicit dates. Longer windows, date comparisons and correlations need Pro. Correlation needs at least 7 finished paired days with variation in both series; it is not causation. Missing data is not zero. Body temperature is the body-temperature type, not sleep wrist temperature. The two blood-pressure readings are not joined across time into one measurement. Sleep is split by calendar day. AI replies do not replace care.</p>
   <p><a href="../support/">Support</a>, <a href="../terms/">use and purchases</a></p>
 </section>
+{pending_release_block(False)}
 {cite_box("en")}
 <section class="section">
   <div class="notice"><p>{FACTS["disclaimerEn"]}</p></div>
@@ -879,7 +889,8 @@ def page_features_en() -> str:
 
 
 FAQ_ZH = [
-    ("元气指数现在上架了吗？", "是。1.1.0 已在 App Store 提供，仅 iOS。商店页：https://apps.apple.com/app/id6762522305"),
+    ("元气指数现在上架了吗？", "是。1.1.0 已在 App Store 提供，仅 iOS。1.2.0 的 iPad 与配对 Apple Watch 功能正在准备，尚未发布。商店页：https://apps.apple.com/app/id6762522305"),
+    ("1.2.0 的 Apple Watch 怎样使用？", FACTS["pendingRelease"]["supportZh"]),
     ("有 Android 或 Google Play 版本吗？", "没有。目前只发布 iOS。"),
     ("第一次打开要做什么？", "阅读健康权限说明后点「继续」，在系统弹窗选择允许读取的类型。稍后可到「设置 → 健康数据与权限」。应用只读，不写入 Apple 健康。"),
     ("为什么有的指标是空的？", "先确认 Apple 健康里该日期已有记录，再检查读取权限并刷新。空白不是 0，也不能单凭空白判断你拒绝了权限。"),
@@ -897,7 +908,8 @@ FAQ_ZH = [
 ]
 
 FAQ_EN = [
-    ("Is VitaGauge on the App Store?", "Yes. Version 1.1.0 is live, iOS only. https://apps.apple.com/app/id6762522305"),
+    ("Is VitaGauge on the App Store?", "Yes. Version 1.1.0 is live, iOS only. Native iPad and paired Apple Watch support are planned for 1.2.0, which is not released. https://apps.apple.com/app/id6762522305"),
+    ("How will Apple Watch work in 1.2.0?", FACTS["pendingRelease"]["supportEn"]),
     ("Is there an Android app?", "No. There is no Google Play listing."),
     ("What should I do on first launch?", "Read the Health explanation, tap Continue, and choose types in the system sheet. Later use Settings → Health data & permissions. The app reads records and does not write to HealthKit."),
     ("Why are some metrics blank?", "Confirm Apple Health has records for that date, review read permissions, then refresh. A blank is not zero and does not by itself prove denied access."),
@@ -976,6 +988,8 @@ def page_support_zh() -> str:
     <p>选指标、设目标值、查看最近 30 天进度，可暂停或删除。免费 1 个，多个需要 Pro。</p>
     <h3>小组件</h3>
     <p>iOS 17 可添加桌面小号/中号、锁屏圆形/矩形。每个实例可选步数、睡眠、活动能量、步行距离、体能训练或自动关注进行中目标，并可隐藏数值。打开应用同步后更新，显示同步时间。超过约两小时会提示需要更新。午夜后不再显示昨天的数据。不是实时监测，也不调用 AI。</p>
+    <h3>配对 Apple Watch（计划随 1.2.0 提供）</h3>
+    <p>{FACTS["pendingRelease"]["supportZh"]}</p>
     <h3>界面语言</h3>
     <p>「设置 → 应用语言」。支持 13 种界面语言。语音只在设备端识别可用时提供。</p>
     <h3>语音</h3>
@@ -1013,6 +1027,7 @@ def page_support_zh() -> str:
     {faq_html(FAQ_ZH)}
   </section>
 </article>
+{pending_release_block(True)}
 {cite_box("zh")}
 """
         + footer("zh", "../")
@@ -1076,6 +1091,8 @@ def page_support_en() -> str:
     <p>Pick a metric and target, review about 30 days of progress, pause or delete. One goal is free.</p>
     <h3>Widgets</h3>
     <p>On iOS 17, add small or medium Home Screen widgets and circular or rectangular Lock Screen widgets. Each instance can show steps, sleep, active energy, walking distance, workouts, or an in-progress goal, and can hide values. Open the app to sync. After about two hours they ask for an update. After midnight they hide yesterday. They are not live monitors and do not call AI.</p>
+    <h3>Paired Apple Watch (planned for 1.2.0)</h3>
+    <p>{FACTS["pendingRelease"]["supportEn"]}</p>
     <h3>Language</h3>
     <p>Settings → App language. The interface has 13 locales. Voice input needs on-device recognition for that language.</p>
     <h3>Voice</h3>
@@ -1113,6 +1130,7 @@ def page_support_en() -> str:
     {faq_html(FAQ_EN)}
   </section>
 </article>
+{pending_release_block(False)}
 {cite_box("en")}
 """
         + footer("en", "../../")
@@ -1144,7 +1162,7 @@ def page_privacy_zh() -> str:
     ])
     return (
         head(lang="zh-Hans", title="隐私政策：元气指数 VitaGauge 如何处理健康与 AI 数据",
-             description="元气指数隐私政策：控制者智超 卫，HealthKit 只读、可选照片头像、端侧语音、自备 Key 的第三方 AI、无分析 SDK、内购由 Apple 处理。生效 2026-09-16，复核 2026-09-18。",
+             description="元气指数隐私政策：控制者智超 卫，HealthKit 只读、可选照片头像、端侧语音、自备 Key 的第三方 AI、无分析 SDK、内购由 Apple 处理。生效 2026-09-16，复核 2026-10-30，补充待发布 1.2.0 的配对手表同步。",
              canonical=url(), alt=url("en"), depth="", og_image="og-privacy.png", extra=extra)
         + header("zh", "privacy", "")
         + f"""
@@ -1204,7 +1222,9 @@ def page_privacy_zh() -> str:
     <h2>HealthKit</h2>
     <p>只有你通过系统授权后，应用才读取：{METRICS_ZH}。应用只读，不向 HealthKit 写入或修改样本。原始记录仍由 Apple 健康管理。体温是体温类型，不是睡眠腕温。收缩压与舒张压不跨时间拼成一次测量。睡眠合并重叠区间后按自然日及夏令时分割。</p>
     <p>首次启动先说明用途，主按钮为「继续」，然后进入系统权限表；不能用「稍后」跳过该系统表。之后可在 Apple 健康或「设置 → 健康数据与权限」更改。系统授权完成不代表每一类都有可见数据。</p>
-    <p>iOS 17 及以上的小组件通过 App Group 读取本机摘要与目标快照，不调用 AI，也不发给开发者。快照使用文件保护并排除备份。打开应用同步后更新；小组件显示同步时间，可隐藏数值，不是实时监测。</p>
+    <p>iOS 17 及以上的小组件通过 App Group 读取本机摘要与目标快照，不调用 AI，也不发给开发者。快照使用文件保护并排除备份。打开应用同步后更新；小组件显示同步时间，可隐藏数值，不是实时监测。计划随 1.2.0 增加的小组件尺寸与锁屏样式沿用此数据边界；系统安排后台更新，刷新可能延迟。</p>
+    <h3>配对 Apple Watch（计划随 1.2.0 提供）</h3>
+    <p>{FACTS["pendingRelease"]["watchSync"]["disclosureZh"]}</p>
   </section>
   <section id="s4">
     <h2>何时发到第三方 AI</h2>
@@ -1239,7 +1259,7 @@ def page_privacy_zh() -> str:
   </section>
   <section id="s9">
     <h2>儿童与健康提示</h2>
-    <p>应用不面向 13 岁以下儿童。App Store 年龄分级为 12+。若认为儿童向开发者提供了个人信息，请发信以便处理。</p>
+    <p>{FACTS["product"]["ageRatingNoteZh"]} 若认为儿童向开发者提供了个人信息，请发信以便处理。</p>
     <p>{FACTS["disclaimerZh"]} 急症请联系当地急救。</p>
   </section>
   <section id="s10">
@@ -1251,6 +1271,7 @@ def page_privacy_zh() -> str:
     <p>隐私、支持或数据请求：<a href="mailto:{EMAIL}">{EMAIL}</a>。请写明「元气指数 / VitaGauge」，只提供处理所需信息。</p>
   </section>
 </article>
+{pending_release_block(True)}
 {cite_box("zh")}
 """
         + footer("zh", "")
@@ -1265,7 +1286,7 @@ def page_privacy_en() -> str:
     ])
     return (
         head(lang="en", title="Privacy Policy: how VitaGauge handles health and AI data",
-             description="VitaGauge privacy policy: controller 智超 卫 (zhichao wei). HealthKit read-only, optional photo avatar, on-device speech, BYOK third-party AI, no analytics SDK, Apple IAP. Effective 16 September 2026, reviewed 18 September 2026.",
+             description="VitaGauge privacy policy: controller 智超 卫 (zhichao wei). HealthKit read-only, optional photo avatar, on-device speech, BYOK third-party AI, no analytics SDK, Apple IAP. Effective 16 September 2026, reviewed 30 October 2026, with paired-watch disclosure for planned 1.2.0.",
              canonical=url("en"), alt=url(), depth="../", og_image="og-privacy.png", extra=extra)
         + header("en", "privacy", "../")
         + f"""
@@ -1325,7 +1346,9 @@ def page_privacy_en() -> str:
     <h2>HealthKit</h2>
     <p>After permission the app may read {METRICS_EN}. It does not write HealthKit samples. Originals stay in Apple Health. Body temperature is the body-temperature type, not sleep wrist temperature. Systolic and diastolic readings are not joined across time into one measurement. Sleep intervals are merged, then split by calendar day and daylight-saving boundaries.</p>
     <p>First launch explains the next step, the main button is Continue, then the system sheet appears. There is no Later control that skips that sheet. You can change access in Apple Health or Settings → Health data & permissions.</p>
-    <p>Widgets on iOS 17+ read a local App Group snapshot. They do not call AI or send data to the developer. The snapshot uses file protection and is excluded from backups. Open the app to sync. Widgets are not real-time monitors.</p>
+    <p>Widgets on iOS 17+ read a local App Group snapshot. They do not call AI or send data to the developer. The snapshot uses file protection and is excluded from backups. Open the app to sync. Widgets are not real-time monitors. Additional sizes and Lock Screen styles planned for 1.2.0 use the same data boundary. Background updates are scheduled by the system and may be delayed.</p>
+    <h3>Paired Apple Watch (planned for 1.2.0)</h3>
+    <p>{FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}</p>
   </section>
   <section id="s4">
     <h2>When data goes to third-party AI</h2>
@@ -1360,7 +1383,7 @@ def page_privacy_en() -> str:
   </section>
   <section id="s9">
     <h2>Children and health notice</h2>
-    <p>The app is not intended for children under 13. The App Store rating is 12+. Contact us if you believe a child sent personal information to the developer.</p>
+    <p>{FACTS["product"]["ageRatingNoteEn"]} Contact us if you believe a child sent personal information to the developer.</p>
     <p>{FACTS["disclaimerEn"]} Use local emergency services for urgent situations.</p>
   </section>
   <section id="s10">
@@ -1372,6 +1395,7 @@ def page_privacy_en() -> str:
     <p>Privacy, support or data requests: <a href="mailto:{EMAIL}">{EMAIL}</a>. Write “VitaGauge / 元气指数” and send only what is needed.</p>
   </section>
 </article>
+{pending_release_block(False)}
 {cite_box("en")}
 """
         + footer("en", "../")
@@ -1623,7 +1647,10 @@ def write_geo_files() -> None:
 - No app account. No ads. No behavioral tracking SDK. No developer AI proxy or hosted model.
 - Health data: HealthKit read-only, 16 metrics. The app does not write HealthKit samples.
 - AI: optional, user-owned API key (BYOK), device-to-provider HTTPS after separate Who / What / Why consent.
-- Privacy policy effective {EFFECTIVE}; page reviewed {REVIEWED}; no new processing in the review.
+- Privacy policy effective {EFFECTIVE}; page reviewed {REVIEWED}; added disclosure for paired-watch processing planned for 1.2.0.
+- Planned release (not live): {FACTS["pendingRelease"]["summaryEn"]}
+- Paired-watch data boundary: {FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}
+- Age rating: {FACTS["product"]["ageRatingNoteEn"]}
 - Not a medical device. Not a substitute for professional medical advice, diagnosis, prescription, or emergency care.
 
 ## Official URLs
@@ -1650,7 +1677,7 @@ def write_geo_files() -> None:
     faq_lines = "\n".join(f"Q: {q}\nA: {a}\n" for q, a in FAQ_EN)
     full = f"""# 元气指数 / VitaGauge: full citation sheet
 
-Last reviewed {REVIEWED} against the shipping iOS app 1.1.0 and App Store lookup. Prefer this file and `product-facts.json` over marketing adjectives. Privacy processing last changed {EFFECTIVE}.
+Last reviewed {REVIEWED} against released iOS app 1.1.0 and the planned 1.2.0 source. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains {EFFECTIVE}; the paired-watch disclosure applies when 1.2.0 provides that feature.
 
 ## Entity
 
@@ -1698,9 +1725,16 @@ Last reviewed {REVIEWED} against the shipping iOS app 1.1.0 and App Store lookup
 9. Voice input is on-device speech recognition only, max 55 seconds, text lands in the editor for review before send.
 10. No developer-operated account, no ads, no third-party analytics or crash SDK, no developer AI key or relay server.
 
+## Planned release 1.2.0 (not live)
+
+{FACTS["pendingRelease"]["summaryEn"]}
+
+{FACTS["pendingRelease"]["supportEn"]}
+
 ## Data practices (do not over-claim)
 
 - Raw HealthKit samples remain in Apple Health.
+- Planned paired-watch processing: {FACTS["pendingRelease"]["watchSync"]["disclosureEn"]}
 - Goals, chat, profile, avatar, AI metadata and widget snapshots use iOS file protection and are excluded from system backups.
 - API keys use This-Device-Only Keychain, not iCloud Keychain.
 - Preset hosts: {recipients}. Custom HTTPS endpoints are allowed.

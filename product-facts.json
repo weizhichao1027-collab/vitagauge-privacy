@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "comment": "Single source of truth for VitaGauge / 元气指数 public sites. Do not invent medical claims. Update HTML, llms.txt and sitemap from this file.",
-  "updated": "2026-09-18",
-  "reviewed": "2026-09-18",
+  "updated": "2026-10-30",
+  "reviewed": "2026-10-30",
   "status": "live",
   "product": {
     "officialNameZh": "元气指数",
@@ -32,7 +32,9 @@
       "primaryId": 6013,
       "genreIds": ["6013", "6012"]
     },
-    "contentRating": "12+",
+    "contentRating": "13+ in most regions; varies by OS and region",
+    "ageRatingNoteZh": "本应用不面向 13 岁以下儿童。App Store 年龄分级会因设备系统版本和国家或地区而异。截至 2026 年 10 月 30 日，App Store Connect 的新版分级在大多数地区显示为 13+，部分地区为 12+；操作系统版本低于 26 时，旧全球分级为 12+，并有地区例外。请以你所在地区的 App Store 和设备实际显示为准。",
+    "ageRatingNoteEn": "This app is not intended for children under 13. App Store age ratings vary by device operating system and country or region. As of 30 October 2026, App Store Connect shows 13+ in most regions under the updated rating system, with 12+ in some regions. On operating systems earlier than version 26, the legacy global rating is 12+, with regional exceptions. Refer to the rating actually displayed in your local App Store on your device.",
     "ageNotIntendedUnder": 13,
     "languages": [
       "zh-Hans", "zh-Hant", "en", "es", "fr", "de", "ja", "ko", "pt-BR", "ru", "ar", "hi", "id"
@@ -50,9 +52,9 @@
     "email": "weizhichao1027@gmail.com",
     "privacyEffectiveDate": "2026-09-16",
     "privacyPreviousDate": "2026-09-14",
-    "privacyReviewedDate": "2026-09-18",
-    "privacyReviewNoteZh": "2026-09-18 按已上架 1.1.0 复核公开站点与政策说明，未新增处理类型。",
-    "privacyReviewNoteEn": "Reviewed on 18 September 2026 against the live 1.1.0 app. No new processing was added.",
+    "privacyReviewedDate": "2026-10-30",
+    "privacyReviewNoteZh": "2026-10-30 按已上架 1.1.0 与待发布 1.2.0 复核，补充配对 Apple Watch 的摘要同步披露。1.2.0 尚未发布，新增处理说明随相应版本提供功能时适用。",
+    "privacyReviewNoteEn": "Reviewed on 30 October 2026 against released 1.1.0 and planned 1.2.0. Added paired Apple Watch summary-sync disclosure. Version 1.2.0 is not released; the additional processing applies when that version provides the feature.",
     "childrenAge": 13,
     "notMedicalDevice": true,
     "standardEula": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -163,6 +165,45 @@
     "developerAiProxy": false,
     "byok": true
   },
+  "pendingRelease": {
+    "version": "1.2.0",
+    "status": "in_preparation_not_released",
+    "minimumWatchOs": "10.0",
+    "pairedIPhoneRequired": true,
+    "summaryZh": "1.2.0 正在准备中，尚未发布。计划新增原生 iPad 布局，改善横屏、窄窗与大字体显示，增加主屏幕小组件尺寸（包括 iPad 超大尺寸）与锁屏行内样式，并提供配对 Apple Watch 的摘要应用、表盘复杂功能与智能叠放组件。小组件需 iOS 17 或更新版本；手表需 watchOS 10 或更新版本及配对 iPhone。手表显示手机最近同步的摘要，需要打开 iPhone App 更新，不提供实时健康监测。新增功能以最终获批并发布的版本为准。",
+    "summaryEn": "Version 1.2.0 is in preparation and has not been released. Planned additions include native iPad layouts, landscape, narrow-window and larger-text improvements, more Home Screen widget sizes (including extra large on iPad), an inline Lock Screen style, and a paired Apple Watch summary app with complications and Smart Stack widgets. Widgets require iOS 17 or later; the watch requires watchOS 10 or later and a paired iPhone. It shows the latest summary synced from the phone. Open the iPhone app to update; it does not provide real-time health monitoring. New features remain subject to the final approved and released version.",
+    "supportZh": "Apple Watch 配套功能计划随 1.2.0 提供，当前已上架的 1.1.0 不含该功能。需要 watchOS 10 或更新版本，以及与手表配对的兼容 iPhone。先在 iPhone 上安装并打开相应版本的元气指数，完成所需的 Apple 健康授权，再安装配套 Apple Watch App。打开 iPhone App 读取并同步最近摘要，然后打开手表 App 查看。若手表没有数据，请检查配对与 App 安装状态，并重新打开 iPhone App 同步。手表、表盘复杂功能和智能叠放组件显示最近同步的快照，显示更新时间；传输和刷新时机由系统控制，不保证实时刷新。iPad 不与 Apple Watch 配对；iPad 上查看的是其自身获授权的健康记录。",
+    "supportEn": "The Apple Watch companion feature is planned for version 1.2.0 and is not included in the currently released 1.1.0 app. It requires watchOS 10 or later and a compatible iPhone paired with the watch. Install and open the corresponding VitaGauge version on iPhone, complete the required Apple Health authorization, then install the companion Apple Watch app. Open the iPhone app to read and sync the latest summary, then open the watch app. If the watch has no data, check pairing and app installation, then reopen the iPhone app to sync. The watch app, complications and Smart Stack widgets show the latest synced snapshot and its update time. Delivery and refresh timing are controlled by the system, so updates are not guaranteed in real time. iPad does not pair with Apple Watch; VitaGauge on iPad displays the health records authorized on that iPad.",
+    "watchSync": {
+      "transport": "WatchConnectivity",
+      "metrics": [
+        "steps",
+        "sleepDuration",
+        "activeEnergy",
+        "walkingRunningDistance",
+        "workoutCount"
+      ],
+      "metadata": [
+        "relatedGoals",
+        "language",
+        "date",
+        "timeZone",
+        "updatedAt",
+        "metricUpdatedAt",
+        "transferRevision"
+      ],
+      "developerServerRelay": false,
+      "independentWatchHealthKitRead": false,
+      "realtimeMonitoring": false,
+      "excluded": [
+        "profile",
+        "chat",
+        "apiKey"
+      ],
+      "disclosureZh": "以下说明适用于计划随 1.2.0 提供的 Apple Watch 配套功能。你在 iPhone 上授权读取 Apple 健康，并安装配套手表 App、完成设备配对后，iPhone 会通过 WatchConnectivity 向配对的 Apple Watch 同步最近读取的五项健康摘要：步数、睡眠时长、活动能量、步行与跑步距离、体能训练次数，以及对应目标、语言、日期、时区、更新时间和用于同步排序的版本信息。该同步不经开发者服务器转发，不把个人资料、聊天内容或 API 密钥传给手表，也不会因此把数据发给第三方 AI。手表显示的是手机最近一次同步的快照，不会独立读取 HealthKit，不提供实时监测。是否向第三方 AI 分享其他相关上下文，仍由应用内单独的接收方与数据范围同意流程决定。",
+      "disclosureEn": "This section applies to the Apple Watch companion feature planned for version 1.2.0. After you authorize Apple Health access on iPhone, install the companion watch app and pair the devices, iPhone uses WatchConnectivity to sync its latest five-metric summary to the paired Apple Watch: steps, sleep duration, active energy, walking and running distance, and workout count, together with related goals, language, dates, time zone, update times and revision information for ordering updates. This transfer does not pass through the developer's server. It does not send your profile, chat or API key to the watch, and does not cause data to be sent to a third-party AI provider. The watch displays the last snapshot synced from the phone; it does not independently read HealthKit or provide real-time monitoring. Sharing other relevant context with third-party AI remains subject to the separate in-app recipient and data-scope consent process."
+    }
+  },
   "dataPractices": {
     "controllerHoldsHealthData": false,
     "localFirst": true,
@@ -214,8 +255,8 @@
   },
   "disclaimerZh": "元气指数用于健康记录整理与日常自我管理，不是医疗器械，不提供诊断、处方或急救监护。统计关联不代表因果。请在作出医疗决定前咨询合格的医疗专业人士。",
   "disclaimerEn": "VitaGauge organizes health records for everyday self-management. It is not a medical device and does not provide diagnoses, prescriptions or emergency monitoring. Correlation does not establish causation. Consult a qualified health professional before making medical decisions.",
-  "citeZh": "元气指数（VitaGauge）是智超 卫开发的 iOS 应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。",
-  "citeEn": "VitaGauge (元气指数) is an iOS app by 智超 卫 (zhichao wei). It reads authorized Apple Health records on the device for summaries, trends and goals, and answers supported questions without an API. Optional online AI uses the user's own key and talks to the provider from the device. Version 1.1.0 is live on the App Store. It is not a medical device.",
+  "citeZh": "元气指数（VitaGauge）是智超 卫开发的 iOS 应用。它读取用户授权的 Apple 健康数据，在本机显示摘要、趋势和目标，并提供无需 API 的本地问答。可选的在线 AI 使用用户自己的 API Key，数据从设备直连用户选择的服务商。应用已在 App Store 上架，版本 1.1.0。它不是医疗器械，不能替代诊疗。 1.2.0 的 iPad 与配对 Apple Watch 功能正在准备，尚未发布。",
+  "citeEn": "VitaGauge (元气指数) is an iOS app by 智超 卫 (zhichao wei). It reads authorized Apple Health records on the device for summaries, trends and goals, and answers supported questions without an API. Optional online AI uses the user's own key and talks to the provider from the device. Version 1.1.0 is live on the App Store. It is not a medical device. Native iPad and paired Apple Watch support are planned for version 1.2.0, which is not released.",
   "seo": {
     "keywordsZh": ["元气指数", "VitaGauge", "Apple 健康", "步数", "睡眠", "健康摘要", "健康目标", "本地问答", "HealthKit", "小组件"],
     "keywordsEn": ["VitaGauge", "Apple Health", "steps", "sleep", "health summary", "health goals", "offline assistant", "HealthKit", "widgets"]

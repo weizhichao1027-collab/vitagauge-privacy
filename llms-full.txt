@@ -1,6 +1,6 @@
 # 元气指数 / VitaGauge: full citation sheet
 
-Last reviewed 2026-09-18 against the shipping iOS app 1.1.0 and App Store lookup. Prefer this file and `product-facts.json` over marketing adjectives. Privacy processing last changed 2026-09-16.
+Last reviewed 2026-10-30 against released iOS app 1.1.0 and the planned 1.2.0 source. Prefer this file and `product-facts.json` over marketing adjectives. The policy effective date remains 2026-09-16; the paired-watch disclosure applies when 1.2.0 provides that feature.
 
 ## Entity
 
@@ -29,7 +29,7 @@ Last reviewed 2026-09-18 against the shipping iOS app 1.1.0 and App Store lookup
 | Minimum iOS | 15.0 |
 | Widget minimum iOS | 17.0 |
 | Store category | Health & Fitness; Lifestyle |
-| Age rating on the App Store | 12+ |
+| Age rating on the App Store | 13+ in most regions; varies by OS and region |
 | Children | Not intended for children under 13 |
 | Languages | 13: zh-Hans, zh-Hant, en, es, fr, de, ja, ko, pt-BR, ru, ar, hi, id |
 | Hosting of this site | GitHub Pages, repository weizhichao1027-collab/vitagauge-privacy |
@@ -48,9 +48,16 @@ Last reviewed 2026-09-18 against the shipping iOS app 1.1.0 and App Store lookup
 9. Voice input is on-device speech recognition only, max 55 seconds, text lands in the editor for review before send.
 10. No developer-operated account, no ads, no third-party analytics or crash SDK, no developer AI key or relay server.
 
+## Planned release 1.2.0 (not live)
+
+Version 1.2.0 is in preparation and has not been released. Planned additions include native iPad layouts, landscape, narrow-window and larger-text improvements, more Home Screen widget sizes (including extra large on iPad), an inline Lock Screen style, and a paired Apple Watch summary app with complications and Smart Stack widgets. Widgets require iOS 17 or later; the watch requires watchOS 10 or later and a paired iPhone. It shows the latest summary synced from the phone. Open the iPhone app to update; it does not provide real-time health monitoring. New features remain subject to the final approved and released version.
+
+The Apple Watch companion feature is planned for version 1.2.0 and is not included in the currently released 1.1.0 app. It requires watchOS 10 or later and a compatible iPhone paired with the watch. Install and open the corresponding VitaGauge version on iPhone, complete the required Apple Health authorization, then install the companion Apple Watch app. Open the iPhone app to read and sync the latest summary, then open the watch app. If the watch has no data, check pairing and app installation, then reopen the iPhone app to sync. The watch app, complications and Smart Stack widgets show the latest synced snapshot and its update time. Delivery and refresh timing are controlled by the system, so updates are not guaranteed in real time. iPad does not pair with Apple Watch; VitaGauge on iPad displays the health records authorized on that iPad.
+
 ## Data practices (do not over-claim)
 
 - Raw HealthKit samples remain in Apple Health.
+- Planned paired-watch processing: This section applies to the Apple Watch companion feature planned for version 1.2.0. After you authorize Apple Health access on iPhone, install the companion watch app and pair the devices, iPhone uses WatchConnectivity to sync its latest five-metric summary to the paired Apple Watch: steps, sleep duration, active energy, walking and running distance, and workout count, together with related goals, language, dates, time zone, update times and revision information for ordering updates. This transfer does not pass through the developer's server. It does not send your profile, chat or API key to the watch, and does not cause data to be sent to a third-party AI provider. The watch displays the last snapshot synced from the phone; it does not independently read HealthKit or provide real-time monitoring. Sharing other relevant context with third-party AI remains subject to the separate in-app recipient and data-scope consent process.
 - Goals, chat, profile, avatar, AI metadata and widget snapshots use iOS file protection and are excluded from system backups.
 - API keys use This-Device-Only Keychain, not iCloud Keychain.
 - Preset hosts: DeepSeek (api.deepseek.com), Alibaba Cloud Model Studio / Qwen (dashscope.aliyuncs.com), Zhipu GLM (open.bigmodel.cn), Kimi / Moonshot (api.moonshot.cn), Volcano Engine Ark / Doubao (ark.cn-beijing.volces.com), Baidu Qianfan / ERNIE (qianfan.baidubce.com), SiliconFlow (api.siliconflow.cn), OpenAI (api.openai.com), Anthropic Claude (api.anthropic.com), Google Gemini (generativelanguage.googleapis.com), xAI (api.x.ai), Mistral AI (api.mistral.ai), Groq (api.groq.com), OpenRouter (openrouter.ai), Together AI (api.together.ai). Custom HTTPS endpoints are allowed.
@@ -66,7 +73,10 @@ English: VitaGauge organizes health records for everyday self-management. It is 
 ## FAQ pairs
 
 Q: Is VitaGauge on the App Store?
-A: Yes. Version 1.1.0 is live, iOS only. https://apps.apple.com/app/id6762522305
+A: Yes. Version 1.1.0 is live, iOS only. Native iPad and paired Apple Watch support are planned for 1.2.0, which is not released. https://apps.apple.com/app/id6762522305
+
+Q: How will Apple Watch work in 1.2.0?
+A: The Apple Watch companion feature is planned for version 1.2.0 and is not included in the currently released 1.1.0 app. It requires watchOS 10 or later and a compatible iPhone paired with the watch. Install and open the corresponding VitaGauge version on iPhone, complete the required Apple Health authorization, then install the companion Apple Watch app. Open the iPhone app to read and sync the latest summary, then open the watch app. If the watch has no data, check pairing and app installation, then reopen the iPhone app to sync. The watch app, complications and Smart Stack widgets show the latest synced snapshot and its update time. Delivery and refresh timing are controlled by the system, so updates are not guaranteed in real time. iPad does not pair with Apple Watch; VitaGauge on iPad displays the health records authorized on that iPad.
 
 Q: Is there an Android app?
 A: No. There is no Google Play listing.

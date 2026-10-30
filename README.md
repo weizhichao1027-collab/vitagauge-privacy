@@ -2,7 +2,7 @@
 
 静态官方、营销、支持与政策站点。只放公开产品事实和合成示例截图。
 
-应用 **1.1.0 已于 2026-09-15 在 App Store 上架**。本目录按 2026-09-18 再复核：文案为「现已提供」，政策生效日仍为 **2026-09-16**，本页复核日为 **2026-09-18**（未新增处理类型）。
+应用 **1.1.0 已于 2026-09-15 在 App Store 上架**。本目录按 2026-10-30 再复核：已发布版本仍为 **1.1.0**；**1.2.0 尚未发布**，iPad、配对 Apple Watch 与新增组件明确列为准备中的功能。政策生效日保留 **2026-09-16**，本页复核日为 **2026-10-30**，补充的配对手表同步说明随相应版本提供功能时适用。
 
 本目录已被 **app 仓库 `.gitignore` 忽略**。`git status` 看不到这里的改动。线上以发布仓库为准；产品交接以 app 仓库的[项目交接文档](../项目交接文档.md)为准。
 
@@ -48,7 +48,7 @@ GitHub Pages 发布 `main` 根目录。无构建依赖、无表单、无 Cookie�
 
 SEO：每页独立 title / description / canonical / robots / Open Graph / Twitter Card；1200×630 `og-*.png`；hreflang `zh-Hans` / `en` / `x-default`；`robots.txt`；`sitemap.xml`（含 hreflang 与截图）；`404.html`；`site.webmanifest`；JSON-LD `Organization`（含 ContactPoint）、`SoftwareApplication`（含 featureList、AggregateOffer、fileSize、contentRating）、`WebSite`、`HowTo`（支持页首次启动）、`FAQPage`、`BreadcrumbList`。
 
-GEO：页面上的「可引用的产品事实」与政策「先读这一段」；`llms.txt`、`llms-full.txt`、`product-facts.json`、`ai.txt`、`humans.txt`、`.well-known/llms.txt`、`.well-known/ai.txt`、`.well-known/security.txt`；支持页 15 组 FAQ。Google Search 不把 llms.txt 当排名信号，这些文件用于助手引用与站点卫生。
+GEO：页面上的「可引用的产品事实」与政策「先读这一段」；`llms.txt`、`llms-full.txt`、`product-facts.json`、`ai.txt`、`humans.txt`、`.well-known/llms.txt`、`.well-known/ai.txt`、`.well-known/security.txt`；支持页 16 组 FAQ。Google Search 不把 llms.txt 当排名信号，这些文件用于助手引用与站点卫生。
 
 ## 2026-09-18 相对 2026-09-16 的变化
 
@@ -67,3 +67,12 @@ GEO：页面上的「可引用的产品事实」与政策「先读这一段」�
 - 权限事实：HealthKit 只读；麦克风 + 设备端语音；头像 PHPicker，无相机；无账户；无分析 / 崩溃 / 广告 SDK。
 - 中国大陆 Pro 首发标价写 ¥38 时，必须同时写「以 Apple 购买页为准」。
 - 可见文案不用破折号（—）。
+
+## 2026-10-30 提审资料准备
+
+- `product-facts.json` 保留当前商店 1.1.0 事实，增加独立的 `pendingRelease`，不将 1.2.0 写成已发布。
+- 中英功能/官方介绍/支持页补 iPad、配对 Watch、所需系统及系统控制的刷新边界；支持 FAQ 与机器可读资料同步。
+- 中英政策补五项健康摘要与关联目标、语言、时间及同步排序信息的 WatchConnectivity 传输，明确无开发者服务器转发、无资料/聊天/API 密钥，不触发第三方 AI 请求。
+- 年龄分级按设备系统与地区区分，产品仍不面向 13 岁以下儿童。
+- 应用内离线政策摘要现已同步为 2026-10-30，并补充 13 语言的配对手表数据处理说明；随下一版构建提供。上述 2026-09-18 日期属于历史变更记录。
+- 本轮生成与本地校验完成，部署及线上回读由提审主流程另行记录。
