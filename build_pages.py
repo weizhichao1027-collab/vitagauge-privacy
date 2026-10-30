@@ -5,10 +5,12 @@ from __future__ import annotations
 
 import json
 from html import escape
+from hashlib import sha256
 from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
+CSS_VERSION = sha256((ROOT / "site.css").read_bytes()).hexdigest()[:12]
 FACTS = json.loads((ROOT / "product-facts.json").read_text(encoding="utf-8"))
 BASE = FACTS["sites"]["base"]
 TODAY = FACTS["updated"]
@@ -273,7 +275,7 @@ def head(
 <link rel="icon" href="{icon}">
 <link rel="icon" type="image/png" sizes="32x32" href="{asset(depth, 'favicon-32.png')}">
 <link rel="apple-touch-icon" href="{asset(depth, 'apple-touch-icon.png')}">
-<link rel="stylesheet" href="{depth}site.css">
+<link rel="stylesheet" href="{depth}site.css?v={CSS_VERSION}">
 {extra}
 {page_graph}
 </head>
